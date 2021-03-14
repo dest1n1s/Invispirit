@@ -8,3 +8,5 @@ unity 项目名为 ecysl
 1. 英雄的隐形与显形逻辑
 2. 英雄的生成
 3. 英雄的远程攻击（Bullet）
+
+有补充直接改README.md或者发在Issues里
