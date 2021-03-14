@@ -11,6 +11,9 @@ namespace Assets.Scripts
     //{
     //    Up,Down,Left,Right,UpLeft,DownLeft,UpRight,DownRight,Any
     //}
+    /// <summary>
+    /// 管理刚体移动类
+    /// </summary>
     abstract class TransformManager
     {
         //protected static double speed;
@@ -32,6 +35,9 @@ namespace Assets.Scripts
         {
             rigidbody.velocity = new Vector2();
         }
+        /// <summary>
+        /// 从config中读取移动速度
+        /// </summary>
         abstract protected void GetSpeed();
     }
 }

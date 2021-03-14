@@ -31,7 +31,7 @@ namespace Assets.Scripts.Math
         }
         public static EVector2 Rotate(EVector2 vector, double rad)
         {
-            EMatrix2x2 matrix = new EMatrix2x2(new double[4] { System.Math.Cos(rad), System.Math.Sin(rad), -System.Math.Sin(rad), System.Math.Cos(rad) });
+            EMatrix2x2 matrix = new EMatrix2x2(new double[4] { System.Math.Cos(rad), -System.Math.Sin(rad), System.Math.Sin(rad), System.Math.Cos(rad) });
             return matrix * vector;
         }
         public void Rotate(double rad)

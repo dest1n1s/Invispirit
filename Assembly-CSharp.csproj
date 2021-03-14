@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{F4EE2B64-5588-6E43-F74D-1A4147B85D3D}</ProjectGuid>
+    <ProjectGuid>{33DF4FC6-47EF-4BC9-3421-CEAABE1590C4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -59,11 +59,12 @@
     <Compile Include="Assets\Scripts\Math\EMatrix2x2.cs" />
     <Compile Include="Assets\Scripts\HeroTransformManager.cs" />
     <Compile Include="Assets\Scripts\TransformManager.cs" />
+    <Compile Include="Assets\Scripts\Config\ConfigManager.cs" />
+    <Compile Include="Assets\Scripts\Config\ConfigIni.cs" />
     <Compile Include="Assets\Scripts\InitializeBehavior.cs" />
     <Compile Include="Assets\Scripts\Math\EVector2.cs" />
     <Compile Include="Assets\Scripts\MoveBehavior.cs" />
-    <Compile Include="Assets\Scripts\Config\ConfigManager.cs" />
-    <Compile Include="Assets\Scripts\Config\ConfigIni.cs" />
+    <Compile Include="Assets\Scripts\Math\EComplex.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
