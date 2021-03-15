@@ -11,11 +11,13 @@ public class MoveBehavior : MonoBehaviour
     void Start()
     {
         manager = new HeroTransformManager(GetComponent<Rigidbody2D>());
+        //Debug.Log("Start");
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
+        if (manager == null) Debug.LogError("Manager is Null");
         EComplex e=new EComplex();
         if (Input.GetKey(KeyCode.A))
         {
