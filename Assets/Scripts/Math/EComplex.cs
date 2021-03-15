@@ -176,5 +176,10 @@ namespace Assets.Scripts.Math
         {
             return new EComplex(real, image);
         }
+
+        public override int GetHashCode()
+        {
+            return real.GetHashCode() ^ image.GetHashCode();
+        }
     }
 }
