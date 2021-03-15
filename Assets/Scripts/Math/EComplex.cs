@@ -166,7 +166,7 @@ namespace Assets.Scripts.Math
         }
         public override string ToString()
         {
-            return string.Format("<{0} , {1}>", this.real, this.image);
+            return string.Format("{0}+{1}i", this.real, this.image);
         }
         public static EComplex GetComplex(double real)
         {
