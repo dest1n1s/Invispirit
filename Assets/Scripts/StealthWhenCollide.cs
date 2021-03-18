@@ -15,35 +15,37 @@ public class StealthWhenCollide : MonoBehaviour
     void OnCollisionEnter2D(Collision2D OtherObj)
     {
         Show = true;
-        Debug.Log("Collide");
+    }
+    void OnCollisionStay2D(Collision2D OtherObj)
+    {
+        Show = true;
     }
     void Update()
     {
         if (Show)
         {
+            currentTime = 0;
             tempTime = tempTime + Time.deltaTime;
             if (10 * tempTime > 1)
             {
                 StartCoroutine("Emerge");
-                Debug.Log("Emerge");
                 Show = false;
-                tempTime = 0;
             }
         }
 
         if (!Show)
         {
             currentTime = currentTime + Time.deltaTime;
-            if (currentTime > 5)
+            if (currentTime > 5 && currentTime < 5.1)
             {
                 StartCoroutine("Fade");
-                currentTime = 0;
+                tempTime = 0;
             }
         }
     }
     IEnumerator Fade()
     {
-        for (float f = 1f; f >= 0; f -= 0.1f)
+        for (float f = GetComponent<Renderer>().material.color.a; f >= 0; f -= 0.1f)
         {
             GetComponent<Renderer>().material.color = new Color(1, 1, 1, f);
             yield return new WaitForSeconds(.1f);
@@ -51,9 +53,9 @@ public class StealthWhenCollide : MonoBehaviour
     }
     IEnumerator Emerge()
     {
-        for (float f = 1f; f >= 0; f -= 0.1f)
+        for (float f = GetComponent<Renderer>().material.color.a; f <= 1f; f += 0.1f)
         {
-            GetComponent<Renderer>().material.color = new Color(1, 1, 1, 1 - f);
+            GetComponent<Renderer>().material.color = new Color(1, 1, 1, f);
             yield return new WaitForSeconds(.1f);
         }
     }
