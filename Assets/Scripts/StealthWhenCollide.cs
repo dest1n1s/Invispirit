@@ -15,29 +15,28 @@ public class StealthWhenCollide : MonoBehaviour
     void OnCollisionEnter2D(Collision2D OtherObj)
     {
         Show = true;
-        Debug.Log("Collide");
     }
     void Update()
     {
         if (Show)
         {
+            currentTime = 0;
             tempTime = tempTime + Time.deltaTime;
             if (10 * tempTime > 1)
             {
                 StartCoroutine("Emerge");
-                Debug.Log("Emerge");
                 Show = false;
-                tempTime = 0;
             }
         }
 
         if (!Show)
         {
+
             currentTime = currentTime + Time.deltaTime;
-            if (currentTime > 5)
+            if (currentTime > 5 && currentTime < 5.1)
             {
                 StartCoroutine("Fade");
-                currentTime = 0;
+                tempTime = 0;
             }
         }
     }
@@ -58,4 +57,3 @@ public class StealthWhenCollide : MonoBehaviour
         }
     }
 }
-
