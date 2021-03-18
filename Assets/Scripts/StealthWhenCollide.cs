@@ -11,6 +11,7 @@ public class StealthWhenCollide : MonoBehaviour
     {
         tempTime = 0;
         currentTime = 0;
+        GetComponent<Renderer>().material.color = new Color(1, 1, 1, 0);
     }
     void OnCollisionEnter2D(Collision2D OtherObj)
     {
