@@ -15,10 +15,13 @@ public class StealthWhenCollide : MonoBehaviour
     void OnCollisionEnter2D(Collision2D OtherObj)
     {
         Show = true;
+<<<<<<< HEAD
     }
     void OnCollisionStay2D(Collision2D OtherObj)
     {
         Show = true;
+=======
+>>>>>>> fd9139fd4abd54791a3ef9e6bb0048790eadbace
     }
     void Update()
     {
@@ -35,6 +38,7 @@ public class StealthWhenCollide : MonoBehaviour
 
         if (!Show)
         {
+
             currentTime = currentTime + Time.deltaTime;
             if (currentTime > 5 && currentTime < 5.1)
             {
@@ -60,4 +64,3 @@ public class StealthWhenCollide : MonoBehaviour
         }
     }
 }
-
