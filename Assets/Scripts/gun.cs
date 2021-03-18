@@ -26,7 +26,7 @@ public class gun : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Debug.Log("鼠标左键已经按下");
-            //生成一颗子弹
+            if (bullet == null) Debug.Log("未找到prefab");
             Instantiate(bullet, muzzleTransform.position, Quaternion.Euler(transform.eulerAngles));
 
         }
