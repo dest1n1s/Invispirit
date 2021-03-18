@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4939742036376690440}
   - component: {fileID: 4939742036376690447}
   m_Layer: 0
-  m_Name: bullet
+  m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -144,6 +144,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd172520b657b9c499af47360873e207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  damage: 2
-  destroyDistance: 100
+  Damage: 0
+  DestroyDistance: 100

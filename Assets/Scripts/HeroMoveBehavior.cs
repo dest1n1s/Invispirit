@@ -4,21 +4,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveBehavior : MonoBehaviour
+public class HeroMoveBehavior : MonoBehaviour
 {
     TransformManager manager;
     // Start is called before the first frame update
     void Start()
     {
         manager = new HeroTransformManager(GetComponent<Rigidbody2D>());
-        //Debug.Log("Start");
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (manager == null) Debug.LogError("Manager is Null");
-        EComplex e=new EComplex();
+        Vector2 e=new Vector2();
         if (Input.GetKey(KeyCode.A))
         {
             e += GetAngle(KeyCode.A);
@@ -35,25 +33,25 @@ public class MoveBehavior : MonoBehaviour
         {
             e += GetAngle(KeyCode.D);
         }
-        if (e == 0)
+        if (e.sqrMagnitude==0)
         {
             manager.Stop();
         }
         else
         {
-            manager.Move(e.GetAngle());
+            manager.Move(e.GetRad());
         }
     }
 
-    EComplex GetAngle(KeyCode key)
+    Vector2 GetAngle(KeyCode key)
     {
         switch (key)
         {
-            case KeyCode.D: return EComplex.GetComplex(1, 0);
-            case KeyCode.W: return EComplex.GetComplex(0, 1);
-            case KeyCode.A: return EComplex.GetComplex(-1, 0);
-            case KeyCode.S: return EComplex.GetComplex(0, -1);
-            default:return EComplex.GetComplex(0, 0);
+            case KeyCode.D: return new Vector2(1, 0);
+            case KeyCode.W: return new Vector2(0, 1);
+            case KeyCode.A: return new Vector2(-1, 0);
+            case KeyCode.S: return new Vector2(0, -1);
+            default:return new Vector2(0, 0);
         }
     }
 }

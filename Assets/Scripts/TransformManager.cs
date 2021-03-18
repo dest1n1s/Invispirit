@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Math;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,7 +31,11 @@ namespace Assets.Scripts
             GetSpeed();
         }
 
-        abstract public void Move(double direction);
+        public void Move(double direction)
+        {
+            Vector2 e = new Vector2((float)speed, 0);
+            rigidbody.velocity = e.Rotate(direction);
+        }
         public void Stop()
         {
             rigidbody.velocity = new Vector2();

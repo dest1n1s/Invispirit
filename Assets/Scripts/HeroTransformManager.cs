@@ -15,12 +15,7 @@ namespace Assets.Scripts
         {
             
         }
-        public override void Move(double direction)
-        {
-            EVector2 e = new EVector2(speed, 0);
-            e.Rotate(direction);
-            rigidbody.velocity = e;
-        }
+        
 
         protected override void GetSpeed()
         {
