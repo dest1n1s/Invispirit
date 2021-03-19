@@ -2,25 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StealthWhenCollide : MonoBehaviour
+public class EmergeWhenFire : MonoBehaviour
 {
     float currentTime;
     public bool Show = false;
+    // Start is called before the first frame update
     void Start()
     {
         currentTime = 0;
-        StartCoroutine("Fade");
     }
-    void OnCollisionEnter2D(Collision2D OtherObj)
-    {
-        Show = true;
-    }
-    void OnCollisionStay2D(Collision2D OtherObj)
-    {
-        Show = true;
-    }
+
+    // Update is called once per frame
     void Update()
     {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Show = true;
+        }
         if (Show)
         {
             currentTime = 0;
@@ -31,7 +29,7 @@ public class StealthWhenCollide : MonoBehaviour
         if (!Show)
         {
             currentTime = currentTime + Time.deltaTime;
-            if (currentTime > 5 && currentTime < 5.01)
+            if (currentTime > 5 && currentTime < 5.1)
             {
                 StartCoroutine("Fade");
             }
