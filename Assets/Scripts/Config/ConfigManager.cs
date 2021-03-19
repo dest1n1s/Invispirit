@@ -19,5 +19,9 @@ namespace Assets.Scripts.Config
             if (config == null) Debug.Log("Config is Null");
             return config.ReadIniContent("speed", key);
         }
+        public static double ReadTime(String key)
+        {
+            return Double.Parse(config.ReadIniContent("time", key));
+        }
     }
 }

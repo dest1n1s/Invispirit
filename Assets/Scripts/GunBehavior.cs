@@ -1,3 +1,4 @@
+using Assets.Scripts;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,13 +7,13 @@ public class GunBehavior: MonoBehaviour
 {
     public GameObject Bullet;
     public Transform MuzzleTransform;
-    //public Camera cam;
+    private VisibilityManager heroManager;
     private Vector3 mousePos;
     private Vector2 gunDirection;
     // Start is called before the first frame update
     void Start()
     {
-        
+        heroManager = VisibilityManager.GetInstance(transform.parent.GetComponent<Renderer>());
     }
 
     // Update is called once per frame
@@ -27,11 +28,11 @@ public class GunBehavior: MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
+            heroManager.Emerge();
             if (Bullet == null)
                 Debug.Log("Œ¥’“µΩprefab");
             GameObject newBullet = Instantiate(Bullet, MuzzleTransform.position, Quaternion.Euler(transform.eulerAngles));
             newBullet.GetComponent<BulletBehavior>().Direction = gunDirection;
-
         }
     }
 }

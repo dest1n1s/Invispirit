@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// ÒÑÆúÓÃ
+/// </summary>
 public class EmergeWhenFire : MonoBehaviour
 {
     float currentTime;
