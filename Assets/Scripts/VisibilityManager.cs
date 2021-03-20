@@ -24,7 +24,7 @@ namespace Assets.Scripts
             this.renderer = renderer;
             GetTime();
             VisibilityChangeBehavior.instance.StartCoroutine(CheckVisibility());
-            childRenderer=renderer.GetComponentsInChildren<Renderer>();
+            childRenderer = renderer.GetComponentsInChildren<Renderer>();
             foreach (Renderer r in childRenderer) r.material.color = new Color(r.material.color.r, r.material.color.g, r.material.color.b, 0);
         }
         protected void GetTime()
@@ -51,8 +51,7 @@ namespace Assets.Scripts
         {
             while (true)
             {
-                
-                if (Show == true && renderer.material.color.a == 1)
+                if (Show && renderer.material.color.a == 1)
                 {
                     currentTime += Time.deltaTime;
                     if (currentTime >= maxTime)
@@ -69,9 +68,9 @@ namespace Assets.Scripts
                 else if(!Show && renderer.material.color.a > 0)
                 {
                     renderer.material.color = new Color(renderer.material.color.r, renderer.material.color.g, renderer.material.color.b,
-                        (renderer.material.color.a - Time.deltaTime / emergeTime < 0 ? 0 : renderer.material.color.a - Time.deltaTime / emergeTime));
+                        (renderer.material.color.a - Time.deltaTime / fadeTime < 0 ? 0 : renderer.material.color.a - Time.deltaTime / emergeTime));
                 }
-                if(childRenderer!=null)
+                if (childRenderer != null)
                 {
                     foreach (Renderer r in childRenderer)
                     {
