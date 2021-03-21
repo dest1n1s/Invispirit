@@ -40,8 +40,7 @@ public class BulletBehavior : MonoBehaviour
         if (collider.gameObject.Equals(Shooter)) return;
         if (collider.gameObject.tag == "Player")
         {
-            HealthManager health = collider.GetComponent<HealthManager>();
-            health.Hp -= Damage;
+            collider.GetComponent<HealthManager>( ).Hp -= Damage;
         }
         Destroy(gameObject);
     }

@@ -18,6 +18,6 @@ public class HealthManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HpText.text = Hp.ToString();
+        GameObject.Find("Canvas").GetComponent<Healthbar>().hp = this.Hp;
     }
 }
