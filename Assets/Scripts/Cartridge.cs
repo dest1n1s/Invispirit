@@ -1,46 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-
 public class Cartridge : MonoBehaviour
 {
-    private static Cartridge _instance;
-    public static Cartridge Instance
+    public string weaponName;
+    public int shellCount = 30;
+    public int maxShell = 30;
+    public float loadTime = 1.5f;
+    private int currentCount;
+    public int chargerCount = 5;
+    private float currentLoadTime;
+
+    public bool isLoading()
     {
-        get
+        if (chargerCount == 0) return true;
+        if (currentCount < shellCount)
         {
-            if (_instance != null)
-            {
-                return _instance;
-            }
-            else
-            {
-                return null;
-            }
+            return false;
         }
-    }
-    public Text CountText;
-    public int Count;
-    void Awake()
-    {
-        _instance = this;
-        Count = 30;
-    }
-    public void AutoAdd()
-    {
-        CountText.text = "ammunition:" + --Count;
+        currentLoadTime += Time.deltaTime;
+        if (currentLoadTime >= loadTime)
+            if (currentLoadTime >= loadTime)
+            {
+                currentLoadTime = 0;
+                chargerCount--;
+                currentCount = 0;
+                return false;
+            }
+        return true;
     }
 
-                // Start is called before the first frame update
-                void Start()
+        // Start is called before the first frame update
+        void Start()
     {
         
     }
-
     // Update is called once per frame
     void Update()
     {
         
     }
 }
+
