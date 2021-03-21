@@ -9,7 +9,7 @@ public class BulletBehavior : MonoBehaviour
     //public float Speed;
     public int Damage;
     public float DestroyDistance;
-
+    public GameObject Shooter { get; set; }
     private Rigidbody2D rb2d;
     private Vector3 startPos;
     private TransformManager manager;
@@ -35,14 +35,14 @@ public class BulletBehavior : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collider.gameObject.Equals(Shooter)) return;
+        if (collider.gameObject.tag == "Player")
         {
-            HealthManager health = collision.GetComponent<HealthManager>();
+            HealthManager health = collider.GetComponent<HealthManager>();
             health.Hp -= Damage;
-            Destroy(gameObject);
         }
+        Destroy(gameObject);
     }
-
 }

@@ -7,6 +7,7 @@ public class GunBehavior: MonoBehaviour
 {
     public GameObject Bullet;
     public Transform MuzzleTransform;
+    
     private VisibilityManager heroManager;
     private Vector3 mousePos;
     private Vector2 gunDirection;
@@ -33,6 +34,7 @@ public class GunBehavior: MonoBehaviour
                 Debug.Log("Œ¥’“µΩprefab");
             GameObject newBullet = Instantiate(Bullet, MuzzleTransform.position, Quaternion.Euler(transform.eulerAngles));
             newBullet.GetComponent<BulletBehavior>().Direction = gunDirection;
+            newBullet.GetComponent<BulletBehavior>().Shooter = transform.parent.gameObject;
         }
     }
 }
