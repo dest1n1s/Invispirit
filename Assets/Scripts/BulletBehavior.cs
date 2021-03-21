@@ -17,6 +17,7 @@ public class BulletBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Damage = 20;
         rb2d = GetComponent<Rigidbody2D>();
         rb2d.velocity = new Vector2();
         startPos = transform.position;
@@ -34,4 +35,14 @@ public class BulletBehavior : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            HealthManager health = collision.GetComponent<HealthManager>();
+            health.Hp -= Damage;
+            Destroy(gameObject);
+        }
+    }
+
 }
