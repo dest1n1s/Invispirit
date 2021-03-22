@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Cartridge : MonoBehaviour
+public class Cartridge1 : MonoBehaviour
 {
-    private static Cartridge _instance;
-    public static Cartridge Instance
+    private static Cartridge1 _instance;
+    public static Cartridge1 Instance
     {
         get
         {
