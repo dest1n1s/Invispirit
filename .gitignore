@@ -11,3 +11,5 @@
 *.unityproj
 *.sln
 !/[Aa]ssets/**/*.meta
+/ServerBuild/
+/ServerLinuxBuild/
