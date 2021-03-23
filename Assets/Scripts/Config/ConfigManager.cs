@@ -7,6 +7,9 @@ using UnityEngine;
 
 namespace Assets.Scripts.Config
 {
+    /// <summary>
+    /// 已弃用
+    /// </summary>
     class ConfigManager
     {
         protected static ConfigIni config;
@@ -14,10 +17,10 @@ namespace Assets.Scripts.Config
         {
             config = ConfigIni.Instance;
         }
-        public static String ReadSpeed(String key)
+        public static double ReadSpeed(String key)
         {
             if (config == null) Debug.Log("Config is Null");
-            return config.ReadIniContent("speed", key);
+            return Double.Parse(config.ReadIniContent("speed", key));
         }
         public static double ReadTime(String key)
         {

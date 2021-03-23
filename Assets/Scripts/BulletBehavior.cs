@@ -1,47 +1,46 @@
 using Assets.Scripts;
 using Assets.Scripts.Math;
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletBehavior : MonoBehaviour
+public class BulletBehavior : NetworkBehaviour
 {
-    //public float Speed;
+    [SyncVar]
+    private double speed = 0;
     public int Damage;
     public float DestroyDistance;
     public GameObject Shooter { get; set; }
-    private Rigidbody2D rb2d;
-    private Vector3 startPos;
-    private TransformManager manager;
+    private Rigidbody2D rigidbody;
     public Vector2 Direction { get; set; }
     // Start is called before the first frame update
     void Start()
     {
+        if (isServer)
+            speed = NetworkConfig.Instance.ReadSpeed("bullet1");
         Damage = 20;
-        rb2d = GetComponent<Rigidbody2D>();
-        rb2d.velocity = new Vector2();
-        startPos = transform.position;
-        manager = new BulletTransformManager(rb2d);
+        rigidbody = GetComponent<Rigidbody2D>();
+        rigidbody.velocity = new Vector2();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(Direction);
-        manager.Move(Direction.GetRad());
-        float distance = (transform.position - startPos).magnitude;
-        if (distance > DestroyDistance)
-        {
-            Destroy(gameObject);
-        }
-    }
+        if(isServer)
+            rigidbody.Move(Direction.GetRad(), speed);
+    }   
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.Equals(Shooter)) return;
-        if (collider.gameObject.tag == "Player")
+        if(isServer)
         {
-            collider.GetComponent<HealthManager>( ).Hp -= Damage;
+            if (collider.gameObject.Equals(Shooter)) return;
+            if (collider.gameObject.tag == "Player")
+            {
+                collider.GetComponent<HealthManager>().Hp -= Damage;
+                collider.GetComponent<VisibilityChangeBehavior>().FuncEmerge();
+            }
+            Destroy(gameObject);
         }
-        Destroy(gameObject);
     }
 }

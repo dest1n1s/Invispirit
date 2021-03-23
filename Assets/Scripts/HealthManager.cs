@@ -1,19 +1,38 @@
+using Assets.Scripts;
+using Assets.Scripts.Network;
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthManager : MonoBehaviour
+public class HealthManager : NetworkBehaviour
 {
+    public Healthbar barManager;
+    
+    [SyncVar]
     public int Hp;
-    // Start is called before the first frame update
-    void Start()
+    
+    public override void OnStartClient()
     {
+        barManager = GameObject.Find("Canvas").GetComponent<Healthbar>();
     }
 
-    // Update is called once per frame
+    public override void OnStartServer()
+    {
+        barManager = GameObject.Find("Canvas").GetComponent<Healthbar>();
+    }
+
+    public override void OnStopClient()
+    {
+        
+    }
+
     void Update()
     {
-        GameObject.Find("Canvas").GetComponent<Healthbar>().hp = this.Hp;
+        //if (isServer) Debug.Log("Server:" + Hp);
+        //if (isClient) Debug.Log("Client:" + Hp);
+        //if (isLocalPlayer) Debug.Log("LocalPlayer:" + Hp);
+        barManager.barDictionary[netId].hp = Hp;
     }
 }

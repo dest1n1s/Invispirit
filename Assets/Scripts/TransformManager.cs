@@ -15,34 +15,19 @@ namespace Assets.Scripts
     /// <summary>
     /// 管理刚体移动类
     /// </summary>
-    abstract class TransformManager
+    static class TransformManager
     {
-        //protected static double speed;
-        //public static double Speed
+        public static void Move(this Rigidbody2D rigidbody, double direction, double speed)
+        {
+            Vector2 e = new Vector2((float)speed, 0).Rotate(direction);
+            //rigidbody.AddForce(e * Time.deltaTime);
+            rigidbody.velocity = e;
+        }
+        //public static void Move(this Transform transform, double direction, double speed)
         //{
-        //    get { return speed; }
-        //    set { speed = value; }
+        //    Vector3 e = new Vector2((float)speed, 0).Rotate(direction);
+        //    //rigidbody.velocity = e.Rotate(direction);
+        //    transform.localPosition = transform.localPosition + e * Time.deltaTime * 10;
         //}
-        protected Rigidbody2D rigidbody;
-        protected double speed;
-        public TransformManager(Rigidbody2D rigidbody)
-        {
-            this.rigidbody = rigidbody;
-            GetSpeed();
-        }
-
-        public void Move(double direction)
-        {
-            Vector2 e = new Vector2((float)speed, 0);
-            rigidbody.velocity = e.Rotate(direction);
-        }
-        public void Stop()
-        {
-            rigidbody.velocity = new Vector2();
-        }
-        /// <summary>
-        /// 从config中读取移动速度
-        /// </summary>
-        abstract protected void GetSpeed();
     }
 }

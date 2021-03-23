@@ -1,32 +1,86 @@
+using Assets.Scripts;
+using Assets.Scripts.Network;
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Healthbar : MonoBehaviour
+public class Healthbar : NetworkBehaviour
 {
-    public Image hpImage;
-    public Image hpEffectImage;
-    [HideInInspector] public float hp;
-    [SerializeField] private float maxHp;
-    [SerializeField] private float hurtSpeed = 0.005f;
-    // Start is called before the first frame update
-    void Start()
+    public GameObject HealthBar;
+    public PlayerManager playerManager;
+    public Dictionary<uint, Bar> barDictionary = new Dictionary<uint, Bar>();
+
+    public override void OnStartClient()
     {
-        hp = maxHp;
+        foreach(uint netid in playerManager.idDictionary.Keys)
+        {
+            FuncAddBar(netid);
+        }
     }
 
     // Update is called once per frame
     private void Update()
     {
-        hpImage.fillAmount = hp / maxHp;
-        if (hpEffectImage.fillAmount > hpImage.fillAmount)
+        if(isClient)
         {
-            hpEffectImage.fillAmount -= hurtSpeed;
+            foreach (uint netid in playerManager.idDictionary.Keys)
+            {
+                FuncAddBar(netid);
+            }
+            foreach (Bar bar in barDictionary.Values)
+            {
+                bar.Update();
+            }
         }
-        else
-        {
-            hpEffectImage.fillAmount = hpImage.fillAmount;
-        }
+            
+    }
+
+    [Server]
+    public void AddBar(GameObject player)
+    {
+        uint netid = player.GetComponent<NetworkIdentity>().netId;
+        FuncAddBar(netid);
+        RpcAddBar(netid);
+    }
+
+    [Server]
+    public void RemoveBar(GameObject player)
+    {
+        uint netid = player.GetComponent<NetworkIdentity>().netId;
+        FuncRemoveBar(netid);
+        RpcRemoveBar(netid);
+    }
+
+    [ClientRpc]
+    public void RpcAddBar(uint netid)
+    {
+        FuncAddBar(netid);
+    }
+
+    [ClientRpc]
+    public void RpcRemoveBar(uint netid)
+    {
+        FuncRemoveBar(netid);
+    }
+
+    public void FuncAddBar(uint netid)
+    {
+        if (barDictionary.ContainsKey(netid)) return;
+        GameObject healthbar = Instantiate(HealthBar);
+        healthbar.transform.SetParent(transform);
+        int id = (int)playerManager.idDictionary[netid];
+        healthbar.transform.localPosition = new Vector3(0, -4 * id + 4);
+        Bar bar = new Bar(healthbar, $"Player{id}");
+        barDictionary.Add(netid, bar);
+    }
+
+    public void FuncRemoveBar(uint netid)
+    {
+        if (!barDictionary.ContainsKey(netid)) return;
+        Bar bar = barDictionary[netid];
+        Destroy(bar.barObject);
+        barDictionary.Remove(netid);
     }
 }

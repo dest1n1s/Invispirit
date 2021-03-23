@@ -28,6 +28,7 @@ public class MapGenerator : MonoBehaviour
                 
                 int r = Random.Range(0, Floor.Length);
                 GameObject curFloor = RandomInstantiate(Floor);
+                curFloor.transform.SetParent(transform);
                 curFloor.transform.localScale = new Vector3(FloorSize.x / curFloor.GetComponent<SpriteRenderer>().sprite.bounds.size.x*scale.x,
                     FloorSize.y / curFloor.GetComponent<SpriteRenderer>().sprite.bounds.size.y * scale.y, 0);
                 curFloor.transform.position = new Vector3(StartPosition.x + (i - 1) * FloorSize.x, StartPosition.y - WallHeight - (j - 1) * FloorSize.y);
@@ -38,6 +39,7 @@ public class MapGenerator : MonoBehaviour
         for(int i = 1; i <= WallAmount.x; i++)
         {
             GameObject curWall = RandomInstantiate(Wall);
+            curWall.transform.SetParent(transform);
             curWall.transform.localScale = new Vector3(WallSize.x / curWall.GetComponent<SpriteRenderer>().sprite.bounds.size.x * scale.x,
                 WallSize.y / curWall.GetComponent<SpriteRenderer>().sprite.bounds.size.y * scale.y, 0);
             curWall.transform.position = new Vector3(StartPosition.x + (i - 1) * WallSize.x, StartPosition.y);
@@ -45,6 +47,7 @@ public class MapGenerator : MonoBehaviour
         for (int i = 2; i <= WallAmount.y - 1; i++)
         {
             GameObject curWall = RandomInstantiate(Wall);
+            curWall.transform.SetParent(transform);
             curWall.transform.localScale = new Vector3(WallSize.x / curWall.GetComponent<SpriteRenderer>().sprite.bounds.size.x * scale.x,
                 WallSize.y / curWall.GetComponent<SpriteRenderer>().sprite.bounds.size.y * scale.y, 0);
             curWall.transform.position = new Vector3(StartPosition.x, StartPosition.y - (i - 1) * WallSize.x);
@@ -52,6 +55,7 @@ public class MapGenerator : MonoBehaviour
         for (int i = 2; i <= WallAmount.y - 1; i++)
         {
             GameObject curWall = RandomInstantiate(Wall);
+            curWall.transform.SetParent(transform);
             curWall.transform.localScale = new Vector3(WallSize.x / curWall.GetComponent<SpriteRenderer>().sprite.bounds.size.x * scale.x,
                 WallSize.y / curWall.GetComponent<SpriteRenderer>().sprite.bounds.size.y * scale.y, 0);
             curWall.transform.position = new Vector3(StartPosition.x + (WallAmount.x - 1) * WallSize.x, StartPosition.y - (i - 1) * WallSize.x);
@@ -59,6 +63,7 @@ public class MapGenerator : MonoBehaviour
         for (int i = 1; i <= WallAmount.x; i++)
         {
             GameObject curWall = RandomInstantiate(Wall);
+            curWall.transform.SetParent(transform);
             curWall.transform.localScale = new Vector3(WallSize.x / curWall.GetComponent<SpriteRenderer>().sprite.bounds.size.x * scale.x,
                 WallSize.y / curWall.GetComponent<SpriteRenderer>().sprite.bounds.size.y * scale.y  , 0);
             curWall.transform.position = new Vector3(StartPosition.x + (i - 1) * WallSize.x, StartPosition.y - (WallAmount.y - 1) * WallSize.x);

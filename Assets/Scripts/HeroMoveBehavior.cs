@@ -1,21 +1,32 @@
 using Assets.Scripts;
 using Assets.Scripts.Math;
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HeroMoveBehavior : MonoBehaviour
+public class HeroMoveBehavior : NetworkBehaviour
 {
-    TransformManager manager;
+    [SyncVar]
+    private double speed;
+    private Rigidbody2D rigidbody;
     // Start is called before the first frame update
-    void Start()
+    public override void OnStartServer()
     {
-        manager = new HeroTransformManager(GetComponent<Rigidbody2D>());
+        speed = NetworkConfig.Instance.ReadSpeed("hero1");
+        rigidbody = GetComponent<Rigidbody2D>();
+        rigidbody.freezeRotation = true;
+    }
+    public override void OnStartClient()
+    {
+        rigidbody = GetComponent<Rigidbody2D>();
+        rigidbody.freezeRotation = true;
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
+        if (!isLocalPlayer) return;
         Vector2 e=new Vector2();
         if (Input.GetKey(KeyCode.A))
         {
@@ -35,14 +46,27 @@ public class HeroMoveBehavior : MonoBehaviour
         }
         if (e.sqrMagnitude==0)
         {
-            manager.Stop();
+            CmdMove(e.GetRad(), 0);
         }
         else
         {
-            manager.Move(e.GetRad());
+            CmdMove(e.GetRad(), speed);
+            
         }
     }
 
+    [Command]
+    public void CmdMove(double rad, double speed)
+    {
+        rigidbody.Move(rad, speed);
+        RpcMove(rad, speed);
+    }
+    [ClientRpc]
+    public void RpcMove(double rad, double speed)
+    {
+        rigidbody.Move(rad, speed);
+        //Debug.Log($"{rad},{speed},{rigidbody.velocity}");
+    }
     Vector2 GetAngle(KeyCode key)
     {
         switch (key)

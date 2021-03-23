@@ -20,18 +20,17 @@ public class Cartridge : MonoBehaviour
         }
         currentLoadTime += Time.deltaTime;
         if (currentLoadTime >= loadTime)
-            if (currentLoadTime >= loadTime)
-            {
-                currentLoadTime = 0;
-                chargerCount--;
-                currentCount = 0;
-                return false;
-            }
+        {
+            currentLoadTime = 0;
+            chargerCount--;
+            currentCount = 0;
+            return false;
+        }
         return true;
     }
 
-        // Start is called before the first frame update
-        void Start()
+    // Start is called before the first frame update
+    void Start()
     {
         
     }

@@ -14,7 +14,7 @@ namespace Assets.Scripts.Config
     /// </summary>
     public class ConfigIni
     {
-        protected static ConfigIni instance;
+        protected static ConfigIni _instance;
         public string path;
         public Dictionary<string, string> keyVal = new Dictionary<string, string>();
         
@@ -22,15 +22,15 @@ namespace Assets.Scripts.Config
         {
             get
             {
-                if (instance == null)
+                if (_instance == null)
                 {
                     string configFile = Application.dataPath + "/config.ini";
 #if !UNITY_EDITOR
                         configFile = System.Environment.CurrentDirectory + "/config.ini";
 #endif
-                    instance = new ConfigIni(configFile);
+                    _instance = new ConfigIni(configFile);
                 }
-                return instance;
+                return _instance;
             }
         }
         //ini文件的路径  

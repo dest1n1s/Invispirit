@@ -23,15 +23,15 @@ namespace Assets.Scripts
         {
             this.renderer = renderer;
             GetTime();
-            VisibilityChangeBehavior.instance.StartCoroutine(CheckVisibility());
+            VisibilityChangeBehavior.Instance.StartCoroutine(CheckVisibility());
             childRenderer = renderer.GetComponentsInChildren<Renderer>();
             foreach (Renderer r in childRenderer) r.material.color = new Color(r.material.color.r, r.material.color.g, r.material.color.b, 0);
         }
         protected void GetTime()
         {
-            maxTime = (float)ConfigManager.ReadTime("keepVisible");
-            emergeTime = (float)ConfigManager.ReadTime("emerge");
-            fadeTime = (float)ConfigManager.ReadTime("fade");
+            maxTime = (float)NetworkConfig.Instance.ReadTime("keepVisible");
+            emergeTime = (float)NetworkConfig.Instance.ReadTime("emerge");
+            fadeTime = (float)NetworkConfig.Instance.ReadTime("fade");
         }
         public static VisibilityManager GetInstance(Renderer renderer)
         {

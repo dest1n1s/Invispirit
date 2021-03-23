@@ -40,7 +40,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1522473877316355484}
   - component: {fileID: 1522473877316355474}
-  - component: {fileID: 1522473877316355475}
   m_Layer: 0
   m_Name: gun
   m_TagString: Untagged
@@ -114,20 +113,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1522473877316355475
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1522473877316355485}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5822a4966565f084f8d8f48d8b63e240, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Bullet: {fileID: 4939742036376690446, guid: 75dfa50139d327849980a54faec9b85a, type: 3}
-  MuzzleTransform: {fileID: 1522473876289649110}
 --- !u!1 &4148677210320286261
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,6 +250,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd8af6038529c314a9dbdfc3049ae4a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
 --- !u!114 &1522473877565611931
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,3 +276,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dfc44a6077d1104189f42f3eda55cf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  Hp: 0
