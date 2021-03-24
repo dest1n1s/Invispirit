@@ -14,6 +14,7 @@ public class NetworkConfig : NetworkBehaviour
     private ConfigIni config;
     private SyncDictionary<String, String> configDictionary = new SyncDictionary<string, string>();
     private static readonly String[] keys = { "speed|hero1", "speed|bullet1", "time|keepVisible", "time|emerge", "time|fade" };
+    private static readonly String[] values = { "7", "12", "5", "0.5", "1" };
     private static NetworkConfig _instance;
     public static NetworkConfig Instance {
         get
@@ -27,11 +28,12 @@ public class NetworkConfig : NetworkBehaviour
     /// <para>This will be called for objects on a "host" as well as for object on a dedicated server.</para>
     /// </summary>
     public override void OnStartServer() {
-        config = ConfigIni.Instance;
+        //config = ConfigIni.Instance;
+        int i = 0;
         foreach(String key in keys)
         {
             String[] pre = key.Split('|');
-            configDictionary.Add(key, config.ReadIniContent(pre[0], pre[1]));
+            configDictionary.Add(key, values[i++]);
         }
         _instance = this;
     }
