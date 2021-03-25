@@ -6,13 +6,19 @@ using UnityEngine;
 
 public class GunBehavior: NetworkBehaviour
 {
+    public GameObject Gun1;
+    public GameObject Gun2;
     public GameObject Bullet;
     public Transform MuzzleTransform;
+    public float x;
     
     //private VisibilityManager heroManager;
     private Vector2 gunDirection;
     // Start is called before the first frame update
-
+    public override void OnStartServer()
+    {
+        x = transform.localScale.x;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -22,8 +28,7 @@ public class GunBehavior: NetworkBehaviour
         gunDirection = (mousePos - transform.position).normalized;
         if (gunDirection.sqrMagnitude == 0) gunDirection = new Vector2(0, 1);
         float angle = Mathf.Atan2(gunDirection.y, gunDirection.x) * Mathf.Rad2Deg;
-        transform.eulerAngles = new Vector3(0, 0, angle);
-        CmdUpdateTransform(transform.position, transform.rotation);
+        CmdUpdateTransform(transform.position, transform.rotation,transform.localScale);
         if (Input.GetMouseButtonDown(0))
         {
             //heroManager.Emerge();
@@ -31,6 +36,18 @@ public class GunBehavior: NetworkBehaviour
             if (Bullet == null)
                 Debug.Log("δ�ҵ�prefab");
             CmdFire(mousePos, gameObject);            
+        }
+        if ((mousePos.x - transform.position.x) > 0)
+        {
+            transform.localScale = new Vector3(-x, transform.localScale.y, transform.localScale.z);
+            Gun1.transform.eulerAngles = new Vector3(0, 0, angle);
+            Gun2.transform.eulerAngles = new Vector3(0, 0, angle);
+        }
+        else
+        {
+            transform.localScale = new Vector3(x, transform.localScale.y, transform.localScale.z);
+            Gun1.transform.eulerAngles = new Vector3(0, 0, Mathf.PI * Mathf.Rad2Deg + angle);
+            Gun2.transform.eulerAngles = new Vector3(0, 0, Mathf.PI * Mathf.Rad2Deg + angle);
         }
     }
     [Command]
@@ -45,10 +62,11 @@ public class GunBehavior: NetworkBehaviour
     }
 
     [Command]
-    void CmdUpdateTransform(Vector3 position, Quaternion rotation)
+    void CmdUpdateTransform(Vector3 position, Quaternion rotation, Vector3 localscale)
     {
         this.transform.position = position;
         this.transform.rotation = rotation;
+        this.transform.localScale = localscale;
         //Debug.Log($"Update:{position},{rotation.eulerAngles}");
     }
 }
