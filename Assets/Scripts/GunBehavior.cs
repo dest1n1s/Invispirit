@@ -8,10 +8,12 @@ public class GunBehavior: NetworkBehaviour
 {
     public GameObject Gun1;
     public GameObject Gun2;
+    public GameObject circle1;
+    public GameObject circle2;
     public GameObject Bullet;
     public Transform MuzzleTransform;
     public float x;
-    
+
     //private VisibilityManager heroManager;
     private Vector2 gunDirection;
     // Start is called before the first frame update
@@ -40,14 +42,14 @@ public class GunBehavior: NetworkBehaviour
         if ((mousePos.x - transform.position.x) > 0)
         {
             transform.localScale = new Vector3(-x, transform.localScale.y, transform.localScale.z);
-            Gun1.transform.eulerAngles = new Vector3(0, 0, angle);
-            Gun2.transform.eulerAngles = new Vector3(0, 0, angle);
+            Gun1.transform.RotateAround(circle1.transform.position, new Vector3(0, 0, 1), angle - transform.rotation.eulerAngles.z);
+            Gun2.transform.RotateAround(circle2.transform.position, new Vector3(0, 0, 1), angle - transform.rotation.eulerAngles.z);
         }
         else
         {
             transform.localScale = new Vector3(x, transform.localScale.y, transform.localScale.z);
-            Gun1.transform.eulerAngles = new Vector3(0, 0, Mathf.PI * Mathf.Rad2Deg + angle);
-            Gun2.transform.eulerAngles = new Vector3(0, 0, Mathf.PI * Mathf.Rad2Deg + angle);
+            Gun1.transform.RotateAround(circle1.transform.position, new Vector3(0, 0, 1), Mathf.PI * Mathf.Rad2Deg + angle - transform.rotation.eulerAngles.z);
+            Gun2.transform.RotateAround(circle2.transform.position, new Vector3(0, 0, 1), Mathf.PI * Mathf.Rad2Deg + angle - transform.rotation.eulerAngles.z);
         }
     }
     [Command]
