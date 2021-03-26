@@ -13,4 +13,6 @@
 !/[Aa]ssets/**/*.meta
 /ServerBuild/
 /ServerLinuxBuild/
+/[Pp]ackage/
+/[Pp]ackages/
 Invispirit.rar
