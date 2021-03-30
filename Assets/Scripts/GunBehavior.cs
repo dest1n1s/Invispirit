@@ -21,6 +21,10 @@ public class GunBehavior: NetworkBehaviour
     {
         x = transform.localScale.x;
     }
+    public override void OnStartClient()
+    {
+        x = transform.localScale.x;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -52,6 +56,7 @@ public class GunBehavior: NetworkBehaviour
             Gun2.transform.RotateAround(circle2.transform.position, new Vector3(0, 0, 1), Mathf.PI * Mathf.Rad2Deg + angle - Gun2.transform.rotation.eulerAngles.z);
         }
     }
+
     [Command]
     void CmdFire(Vector3 mousePos, GameObject gameObject)
     {

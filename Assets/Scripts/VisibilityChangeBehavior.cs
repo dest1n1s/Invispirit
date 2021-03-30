@@ -35,7 +35,7 @@ public class VisibilityChangeBehavior : NetworkBehaviour
     {
         if (isLocalPlayer) CmdEmerge();
     }
-    [Command(requiresAuthority = false)]
+    [Command]
     public void CmdEmerge()
     {
         manager.Emerge();
