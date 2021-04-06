@@ -301,12 +301,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 369975687}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd83960fb8cf11044bb4092cf394dc63, type: 3}
+  m_Script: {fileID: 11500000, guid: fe80177b6a9a4704ad378dded27e69fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  HealthBar: {fileID: 7765773416440346742, guid: 80fd302024a534e49999d12411f6483e, type: 3}
+  healthBarStack: {fileID: 7765773416440346742, guid: 80fd302024a534e49999d12411f6483e, type: 3}
   playerManager: {fileID: 1135324579}
 --- !u!114 &369975693
 MonoBehaviour:

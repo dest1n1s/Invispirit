@@ -1,38 +1,50 @@
-using Assets.Scripts;
-using Assets.Scripts.Network;
-using Mirror;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+// <copyright file="HealthManager.cs" company="Invispirit">
+// Copyright (c) Invispirit. All rights reserved.
+// </copyright>
 
+using Mirror;
+using UnityEngine;
+
+/// <summary>
+/// Manages the health of a player.
+/// </summary>
 public class HealthManager : NetworkBehaviour
 {
-    public Healthbar barManager;
-    
-    [SyncVar]
-    public int Hp;
-    
+    private HealthBarStack healthBarStackStack;
+
+    /// <summary>
+    /// Gets or sets the HP of the player.
+    /// </summary>
+    [field: SyncVar]
+    [field: SerializeField]
+    public int Hp { get; set; }
+
+    /// <summary>
+    /// Find the <see cref="HealthBarStack"/> object on starting the client.
+    /// </summary>
     public override void OnStartClient()
     {
-        barManager = GameObject.Find("Canvas").GetComponent<Healthbar>();
+        this.FindBarManager();
     }
 
+    /// <summary>
+    /// Find the <see cref="HealthBarStack"/> object on starting the server.
+    /// </summary>
     public override void OnStartServer()
     {
-        barManager = GameObject.Find("Canvas").GetComponent<Healthbar>();
+        this.FindBarManager();
     }
 
-    public override void OnStopClient()
+    /// <summary>
+    /// Update the visual effect of the player's health bar.
+    /// </summary>
+    private void Update()
     {
-        
+        this.healthBarStackStack.HealthBarForPlayerId[this.netId].Hp = this.Hp;
     }
 
-    void Update()
+    private void FindBarManager()
     {
-        //if (isServer) Debug.Log("Server:" + Hp);
-        //if (isClient) Debug.Log("Client:" + Hp);
-        //if (isLocalPlayer) Debug.Log("LocalPlayer:" + Hp);
-        barManager.barDictionary[netId].hp = Hp;
+        this.healthBarStackStack = GameObject.Find("Canvas").GetComponent<HealthBarStack>();
     }
 }

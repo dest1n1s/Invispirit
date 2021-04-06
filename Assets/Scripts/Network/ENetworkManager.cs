@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Mirror;
 using Assets.Scripts.Network;
-using Assets.Scripts.Config;
 
 /*
 	Documentation: https://mirror-networking.com/docs/Components/NetworkManager.html
@@ -12,7 +11,7 @@ using Assets.Scripts.Config;
 public class ENetworkManager : NetworkManager
 {
     public PlayerManager playerManager;
-    public Healthbar barManager;
+    public HealthBarStack barManager;
     #region Start & Stop
 
     /// <summary>
@@ -115,8 +114,8 @@ public class ENetworkManager : NetworkManager
         NetworkServer.AddPlayerForConnection(conn, player);
         playerManager.TargetSendIdDictionary(conn, playerManager.GetKeyArray(), playerManager.GetValueArray());
         playerManager.AddPlayer(player);
-        barManager = GameObject.Find("Canvas").GetComponent<Healthbar>();
-        barManager.AddBar(player);
+        barManager = GameObject.Find("Canvas").GetComponent<HealthBarStack>();
+        barManager.AddHealthBarForPlayer(player);
     }
 
     /// <summary>
@@ -126,7 +125,7 @@ public class ENetworkManager : NetworkManager
     /// <param name="conn">Connection from client.</param>
     public override void OnServerDisconnect(NetworkConnection conn)
     {
-        barManager.RemoveBar(conn.identity.gameObject);
+        barManager.RemoveBarForPlayer(conn.identity.gameObject);
         playerManager.RemovePlayer(conn.identity.gameObject);
         
         base.OnServerDisconnect(conn);

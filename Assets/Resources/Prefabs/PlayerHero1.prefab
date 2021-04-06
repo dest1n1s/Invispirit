@@ -79,7 +79,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &4912383391690844649
@@ -239,6 +239,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  <Gun1>k__BackingField: {fileID: 0}
+  <Gun2>k__BackingField: {fileID: 0}
+  <Axis1>k__BackingField: {fileID: 0}
+  <Axis2>k__BackingField: {fileID: 0}
+  <Bullet>k__BackingField: {fileID: 0}
 --- !u!114 &3670287231918764190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -253,8 +258,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0
-  barManager: {fileID: 0}
-  Hp: 100
+  <Hp>k__BackingField: 100
 --- !u!50 &-8389435882144862287
 Rigidbody2D:
   serializedVersion: 4
@@ -976,6 +980,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  <MaxTime>k__BackingField: 3
+  <EmergeTime>k__BackingField: 0.5
+  <FadeTime>k__BackingField: 1
 --- !u!1 &5415385283161448306
 GameObject:
   m_ObjectHideFlags: 0
@@ -1138,7 +1145,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &7538934203419991617
