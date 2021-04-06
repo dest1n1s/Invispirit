@@ -1,73 +1,44 @@
 using Assets.Scripts;
 using Assets.Scripts.Math;
 using Mirror;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Control the movement of hero.
+/// </summary>
 public class HeroMoveBehavior : NetworkBehaviour
 {
-    [SyncVar]
-    private double speed;
-    private Rigidbody2D rigidbody;
-    // Start is called before the first frame update
+    private new Rigidbody2D rigidbody;
+
+    /// <summary>
+    /// Gets or sets the speed of the hero.
+    /// </summary>
+    public double Speed { get; set; } = 7;
+
+    /// <summary>
+    /// Called when starting server.
+    /// </summary>
     public override void OnStartServer()
     {
-        speed = NetworkConfig.Instance.ReadSpeed("hero1");
-        rigidbody = GetComponent<Rigidbody2D>();
-        rigidbody.freezeRotation = true;
+        this.rigidbody = this.GetComponent<Rigidbody2D>();
+        this.rigidbody.freezeRotation = true;
     }
+
+    /// <summary>
+    /// Called when starting client.
+    /// </summary>
     public override void OnStartClient()
     {
-        rigidbody = GetComponent<Rigidbody2D>();
-        rigidbody.freezeRotation = true;
+        this.rigidbody = this.GetComponent<Rigidbody2D>();
+        this.rigidbody.freezeRotation = true;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (!isLocalPlayer) return;
-        Vector2 e=new Vector2();
-        if (Input.GetKey(KeyCode.A))
-        {
-            e += GetAngle(KeyCode.A);
-        }
-        if (Input.GetKey(KeyCode.W))
-        {
-            e += GetAngle(KeyCode.W);
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            e += GetAngle(KeyCode.S);
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            e += GetAngle(KeyCode.D);
-        }
-        if (e.sqrMagnitude==0)
-        {
-            CmdMove(e.GetRad(), 0);
-        }
-        else
-        {
-            CmdMove(e.GetRad(), speed);
-            
-        }
-    }
-
-    [Command]
-    public void CmdMove(double rad, double speed)
-    {
-        rigidbody.Move(rad, speed);
-        RpcMove(rad, speed);
-    }
-    [ClientRpc]
-    public void RpcMove(double rad, double speed)
-    {
-        rigidbody.Move(rad, speed);
-        //Debug.Log($"{rad},{speed},{rigidbody.velocity}");
-    }
-    Vector2 GetAngle(KeyCode key)
+    /// <summary>
+    /// Get the rad of rotation from the key.
+    /// </summary>
+    /// <param name="key">the key down</param>
+    /// <returns>the rad of rotation</returns>
+    public Vector2 GetRad(KeyCode key)
     {
         switch (key)
         {
@@ -75,7 +46,58 @@ public class HeroMoveBehavior : NetworkBehaviour
             case KeyCode.W: return new Vector2(0, 1);
             case KeyCode.A: return new Vector2(-1, 0);
             case KeyCode.S: return new Vector2(0, -1);
-            default:return new Vector2(0, 0);
+            default: return new Vector2(0, 0);
         }
+    }
+
+    private void Update()
+    {
+        if (!this.isLocalPlayer)
+        {
+            return;
+        }
+
+        Vector2 e = default(Vector2);
+        if (Input.GetKey(KeyCode.A))
+        {
+            e += this.GetRad(KeyCode.A);
+        }
+
+        if (Input.GetKey(KeyCode.W))
+        {
+            e += this.GetRad(KeyCode.W);
+        }
+
+        if (Input.GetKey(KeyCode.S))
+        {
+            e += this.GetRad(KeyCode.S);
+        }
+
+        if (Input.GetKey(KeyCode.D))
+        {
+            e += this.GetRad(KeyCode.D);
+        }
+
+        if (e.sqrMagnitude == 0)
+        {
+            this.CmdMove(e.GetRad(), 0);
+        }
+        else
+        {
+            this.CmdMove(e.GetRad(), this.Speed);
+        }
+    }
+
+    [Command]
+    private void CmdMove(double rad, double speed)
+    {
+        this.rigidbody.Move(rad, speed);
+        this.RpcMove(rad, speed);
+    }
+
+    [ClientRpc]
+    private void RpcMove(double rad, double speed)
+    {
+        this.rigidbody.Move(rad, speed);
     }
 }

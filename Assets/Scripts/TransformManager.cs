@@ -1,9 +1,4 @@
 ﻿using Assets.Scripts.Math;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -23,6 +18,7 @@ namespace Assets.Scripts
             //rigidbody.AddForce(e * Time.deltaTime);
             rigidbody.velocity = e;
         }
+
         //public static void Move(this Transform transform, double direction, double speed)
         //{
         //    Vector3 e = new Vector2((float)speed, 0).Rotate(direction);

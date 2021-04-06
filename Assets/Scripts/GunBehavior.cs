@@ -1,79 +1,125 @@
-using Assets.Scripts;
+// <copyright file="GunBehavior.cs" company="ECYSL">
+//     Copyright (c) ECYSL. All rights reserved.
+// </copyright>
+
 using Mirror;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class GunBehavior: NetworkBehaviour
+/// <summary>
+/// Control the gun of the player.
+/// </summary>
+public class GunBehavior : NetworkBehaviour
 {
-    public GameObject Gun1;
-    public GameObject Gun2;
-    public GameObject circle1;
-    public GameObject circle2;
-    public GameObject Bullet;
-    public Transform MuzzleTransform;
-    public float x;
-
-    //private VisibilityManager heroManager;
+    private Transform muzzleTransform;
+    private Vector3 originalScale;
     private Vector2 gunDirection;
-    // Start is called before the first frame update
+
+    /// <summary>
+    /// Gets or sets the first gun of the player.
+    /// </summary>
+    [field:SerializeField]
+    public GameObject Gun1 { get; set; }
+
+    /// <summary>
+    /// Gets or sets the second gun of the player.
+    /// </summary>
+    [field: SerializeField]
+    public GameObject Gun2 { get; set; }
+
+    /// <summary>
+    /// Gets or sets the rotation axis of gun1.
+    /// </summary>
+    [field: SerializeField]
+    public GameObject Axis1 { get; set; }
+
+    /// <summary>
+    /// Gets or sets the rotation axis of gun2.
+    /// </summary>
+    [field: SerializeField]
+    public GameObject Axis2 { get; set; }
+
+    /// <summary>
+    /// Gets or sets the bullet prefab.
+    /// </summary>
+    [field: SerializeField]
+    public GameObject Bullet { get; set; }
+
+    /// <summary>
+    /// Called when server starts.
+    /// </summary>
     public override void OnStartServer()
     {
-        x = transform.localScale.x;
+        this.originalScale = this.transform.localScale;
     }
+
+    /// <summary>
+    /// Called when client starts.
+    /// </summary>
     public override void OnStartClient()
     {
-        x = transform.localScale.x;
+        this.originalScale = this.transform.localScale;
     }
-    // Update is called once per frame
-    void Update()
+
+    private void Update()
     {
-        if (!isLocalPlayer) return;
+        if (!this.isLocalPlayer)
+        {
+            return;
+        }
+
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0;
-        gunDirection = (mousePos - transform.position).normalized;
-        if (gunDirection.sqrMagnitude == 0) gunDirection = new Vector2(0, 1);
-        float angle = Mathf.Atan2(gunDirection.y, gunDirection.x) * Mathf.Rad2Deg;
-        CmdUpdateTransform(transform.position, transform.rotation,transform.localScale);
-        if (Input.GetMouseButtonDown(0))
+        this.gunDirection = (mousePos - this.transform.position).normalized;
+
+        if (this.gunDirection.sqrMagnitude == 0)
         {
-            //heroManager.Emerge();
-            GetComponent<VisibilityChangeBehavior>().CmdEmerge();
-            if (Bullet == null)
-                Debug.Log("δ�ҵ�prefab");
-            CmdFire(mousePos, gameObject);            
+            this.gunDirection = new Vector2(0, 1);
         }
-        if ((mousePos.x - transform.position.x) > 0)
+
+        float angle = Mathf.Atan2(this.gunDirection.y, this.gunDirection.x) * Mathf.Rad2Deg;
+
+        if (mousePos.x - this.transform.position.x > 0)
         {
-            transform.localScale = new Vector3(-x, transform.localScale.y, transform.localScale.z);
-            Gun1.transform.RotateAround(circle1.transform.position, new Vector3(0, 0, 1), angle - Gun1.transform.rotation.eulerAngles.z);
-            Gun2.transform.RotateAround(circle2.transform.position, new Vector3(0, 0, 1), angle - Gun2.transform.rotation.eulerAngles.z);
+            this.transform.localScale = new Vector3(-this.originalScale.x, this.originalScale.y, this.originalScale.z);
+            this.Gun1.transform.RotateAround(this.Axis1.transform.position, new Vector3(0, 0, 1), angle - this.Gun1.transform.rotation.eulerAngles.z);
+            this.Gun2.transform.RotateAround(this.Axis2.transform.position, new Vector3(0, 0, 1), angle - this.Gun2.transform.rotation.eulerAngles.z);
         }
         else
         {
-            transform.localScale = new Vector3(x, transform.localScale.y, transform.localScale.z);
-            Gun1.transform.RotateAround(circle1.transform.position, new Vector3(0, 0, 1), Mathf.PI * Mathf.Rad2Deg + angle - Gun1.transform.rotation.eulerAngles.z);
-            Gun2.transform.RotateAround(circle2.transform.position, new Vector3(0, 0, 1), Mathf.PI * Mathf.Rad2Deg + angle - Gun2.transform.rotation.eulerAngles.z);
+            this.transform.localScale = new Vector3(this.originalScale.x, this.originalScale.y, this.originalScale.z);
+            this.Gun1.transform.RotateAround(this.Axis1.transform.position, new Vector3(0, 0, 1), (Mathf.PI * Mathf.Rad2Deg) + angle - this.Gun1.transform.rotation.eulerAngles.z);
+            this.Gun2.transform.RotateAround(this.Axis2.transform.position, new Vector3(0, 0, 1), (Mathf.PI * Mathf.Rad2Deg) + angle - this.Gun2.transform.rotation.eulerAngles.z);
+        }
+
+        this.CmdUpdateTransform(this.transform.position, this.transform.rotation, this.transform.localScale);
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            this.GetComponent<VisibilityBehavior>().CmdEmerge();
+            this.CmdFire(mousePos, this.gameObject);
         }
     }
 
     [Command]
-    void CmdFire(Vector3 mousePos, GameObject gameObject)
+    private void CmdFire(Vector3 mousePos, GameObject gameObject)
     {
-        gunDirection = (mousePos - transform.position).normalized;
-        if (gunDirection.sqrMagnitude == 0) gunDirection = new Vector2(0, 1);
-        GameObject newBullet = Instantiate(Bullet, MuzzleTransform.position, Quaternion.Euler(transform.eulerAngles));
-        newBullet.GetComponent<BulletBehavior>().Direction = gunDirection;
-        newBullet.GetComponent<BulletBehavior>().Shooter = gameObject;
+        this.gunDirection = (mousePos - this.transform.position).normalized;
+        if (this.gunDirection.sqrMagnitude == 0)
+        {
+            this.gunDirection = new Vector2(0, 1);
+        }
+
+        GameObject newBullet = Instantiate(this.Bullet, this.muzzleTransform.position, Quaternion.Euler(this.transform.eulerAngles));
+        newBullet.GetComponent<BulletBehavior>().Direction = this.gunDirection;
+        newBullet.GetComponent<BulletBehavior>().Shooter = this.gameObject;
         NetworkServer.Spawn(newBullet, gameObject);
     }
 
     [Command]
-    void CmdUpdateTransform(Vector3 position, Quaternion rotation, Vector3 localscale)
+    private void CmdUpdateTransform(Vector3 position, Quaternion rotation, Vector3 localscale)
     {
         this.transform.position = position;
         this.transform.rotation = rotation;
         this.transform.localScale = localscale;
-        //Debug.Log($"Update:{position},{rotation.eulerAngles}");
     }
 }

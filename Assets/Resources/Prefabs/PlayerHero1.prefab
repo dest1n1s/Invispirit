@@ -97,11 +97,11 @@ GameObject:
   - component: {fileID: 2988512946355857111}
   - component: {fileID: 114274915582411006}
   - component: {fileID: 3670287231918764190}
-  - component: {fileID: 4568785184910496958}
   - component: {fileID: -8389435882144862287}
   - component: {fileID: 6101461779776059863}
   - component: {fileID: 2303507636623121668}
   - component: {fileID: 4795266078807856335}
+  - component: {fileID: 5837218393012118402}
   m_Layer: 0
   m_Name: PlayerHero1
   m_TagString: Player
@@ -239,13 +239,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  Gun1: {fileID: 7538934203419991617}
-  Gun2: {fileID: 5415385283161448306}
-  circle1: {fileID: 6780781279485392241}
-  circle2: {fileID: 4595688989550944711}
-  Bullet: {fileID: 4939742036376690446, guid: 75dfa50139d327849980a54faec9b85a, type: 3}
-  MuzzleTransform: {fileID: 7538934204674515466}
-  x: 0
 --- !u!114 &3670287231918764190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,20 +255,6 @@ MonoBehaviour:
   syncInterval: 0
   barManager: {fileID: 0}
   Hp: 100
---- !u!114 &4568785184910496958
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4912383391690844649}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d208f8310c1d4fa4aa570ddbe15559c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
 --- !u!50 &-8389435882144862287
 Rigidbody2D:
   serializedVersion: 4
@@ -983,6 +962,20 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 14.62, y: 25.72316}
   m_Direction: 0
+--- !u!114 &5837218393012118402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4912383391690844649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a9831f3a2894324b91c46caadb85126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
 --- !u!1 &5415385283161448306
 GameObject:
   m_ObjectHideFlags: 0

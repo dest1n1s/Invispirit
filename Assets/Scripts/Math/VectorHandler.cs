@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.Math
 {
@@ -16,7 +11,7 @@ namespace Assets.Scripts.Math
         public static Vector2 Rotate(this Vector2 vector, double rad)
         {
             EMatrix2x2 matrix = new EMatrix2x2(new double[4] { System.Math.Cos(rad), -System.Math.Sin(rad), System.Math.Sin(rad), System.Math.Cos(rad) });
-            Vector2 ret= matrix * vector;
+            Vector2 ret = matrix * vector;
             //Debug.Log("ret:" + ret.ToString()); ;
             return ret;
         }

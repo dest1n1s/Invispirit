@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Assets.Scripts.Math
 {
@@ -36,7 +32,7 @@ namespace Assets.Scripts.Math
             this.real = real;
             this.image = 0;
         }
-        public EComplex():this(0) { }
+        public EComplex() : this(0) { }
         /// <summary>
         /// 取共轭复数
         /// </summary>

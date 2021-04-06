@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
@@ -25,18 +23,18 @@ public class MapGenerator : MonoBehaviour
         for (int i = 2; i <= WallAmount.x - 1; i++)
             for (int j = 2; j <= WallAmount.y - 1; j++)
             {
-                
+
                 int r = Random.Range(0, Floor.Length);
                 GameObject curFloor = RandomInstantiate(Floor);
                 curFloor.transform.SetParent(transform);
-                curFloor.transform.localScale = new Vector3(FloorSize.x / curFloor.GetComponent<SpriteRenderer>().sprite.bounds.size.x*scale.x,
+                curFloor.transform.localScale = new Vector3(FloorSize.x / curFloor.GetComponent<SpriteRenderer>().sprite.bounds.size.x * scale.x,
                     FloorSize.y / curFloor.GetComponent<SpriteRenderer>().sprite.bounds.size.y * scale.y, 0);
                 curFloor.transform.position = new Vector3(StartPosition.x + (i - 1) * FloorSize.x, StartPosition.y - WallHeight - (j - 1) * FloorSize.y);
             }
     }
     void GenerateWall()
     {
-        for(int i = 1; i <= WallAmount.x; i++)
+        for (int i = 1; i <= WallAmount.x; i++)
         {
             GameObject curWall = RandomInstantiate(Wall);
             curWall.transform.SetParent(transform);
@@ -65,7 +63,7 @@ public class MapGenerator : MonoBehaviour
             GameObject curWall = RandomInstantiate(Wall);
             curWall.transform.SetParent(transform);
             curWall.transform.localScale = new Vector3(WallSize.x / curWall.GetComponent<SpriteRenderer>().sprite.bounds.size.x * scale.x,
-                WallSize.y / curWall.GetComponent<SpriteRenderer>().sprite.bounds.size.y * scale.y  , 0);
+                WallSize.y / curWall.GetComponent<SpriteRenderer>().sprite.bounds.size.y * scale.y, 0);
             curWall.transform.position = new Vector3(StartPosition.x + (i - 1) * WallSize.x, StartPosition.y - (WallAmount.y - 1) * WallSize.x);
         }
     }
@@ -78,6 +76,6 @@ public class MapGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
