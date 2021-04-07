@@ -40,7 +40,7 @@ public class HealthManager : NetworkBehaviour
     /// </summary>
     private void Update()
     {
-        this.healthBarStackStack.HealthBarForPlayerId[this.netId].Hp = this.Hp;
+        this.healthBarStackStack.HealthBarForNetId[this.netId].Hp = this.Hp;
     }
 
     private void FindBarManager()

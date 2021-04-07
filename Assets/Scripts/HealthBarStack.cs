@@ -20,7 +20,7 @@ public class HealthBarStack : NetworkBehaviour
     /// <summary>
     /// Gets the dictionary from player ID's to their health bars.
     /// </summary>
-    public Dictionary<uint, HealthBar> HealthBarForPlayerId { get; } = new Dictionary<uint, HealthBar>();
+    public Dictionary<uint, HealthBar> HealthBarForNetId { get; } = new Dictionary<uint, HealthBar>();
 
     /// <summary>
     ///  Add the health bars of all players on starting a client.
@@ -41,8 +41,8 @@ public class HealthBarStack : NetworkBehaviour
     public void AddHealthBarForPlayer(GameObject player)
     {
         var playerNetId = player.GetComponent<NetworkIdentity>().netId;
-        this.AddHealthBarForNetId(playerNetId);
-        this.AddHealthBarForPlayerIdOnClient(playerNetId);
+        this.AddHealthBarForNetId(playerNetId); // add on the server
+        this.AddHealthBarForNetIdOnClient(playerNetId);
     }
 
     /// <summary>
@@ -53,7 +53,7 @@ public class HealthBarStack : NetworkBehaviour
     public void RemoveBarForPlayer(GameObject player)
     {
         var playerNetId = player.GetComponent<NetworkIdentity>().netId;
-        this.RemoveBarForNetId(playerNetId);
+        this.RemoveHealthBarForNetId(playerNetId); // add on the server
         this.RemoveHealthBarForNetIdOnClient(playerNetId);
     }
 
@@ -72,14 +72,14 @@ public class HealthBarStack : NetworkBehaviour
             this.AddHealthBarForNetId(playerNetId);
         }
 
-        foreach (var playerHealthBar in this.HealthBarForPlayerId.Values)
+        foreach (var playerHealthBar in this.HealthBarForNetId.Values)
         {
             playerHealthBar.Update();
         }
     }
 
     [ClientRpc]
-    private void AddHealthBarForPlayerIdOnClient(uint playerNetId)
+    private void AddHealthBarForNetIdOnClient(uint playerNetId)
     {
         this.AddHealthBarForNetId(playerNetId);
     }
@@ -87,7 +87,7 @@ public class HealthBarStack : NetworkBehaviour
     [ClientRpc]
     private void RemoveHealthBarForNetIdOnClient(uint playerNetId)
     {
-        this.RemoveBarForNetId(playerNetId);
+        this.RemoveHealthBarForNetId(playerNetId);
     }
 
     /// <summary>
@@ -109,7 +109,7 @@ public class HealthBarStack : NetworkBehaviour
         var playerId = this.playerManager.idDictionary[playerNetId];
         var healthBarPosition = new Vector3(0, (-4 * playerId) + 4);
         var healthBar = new HealthBar(this.healthBarPrefab, $"Player{playerId}", this.transform, healthBarPosition);
-        this.HealthBarForPlayerId.Add(playerNetId, healthBar);
+        this.HealthBarForNetId.Add(playerNetId, healthBar);
     }
 
     /// <summary>
@@ -120,16 +120,16 @@ public class HealthBarStack : NetworkBehaviour
     /// server.
     /// </para>
     /// <param name="playerNetId">the net ID of the player.</param>
-    private void RemoveBarForNetId(uint playerNetId)
+    private void RemoveHealthBarForNetId(uint playerNetId)
     {
         // Do nothing if the net ID cannot be found
-        if (!this.HealthBarForPlayerId.ContainsKey(playerNetId))
+        if (!this.HealthBarForNetId.ContainsKey(playerNetId))
         {
             return;
         }
 
-        HealthBar healthBar = this.HealthBarForPlayerId[playerNetId];
+        var healthBar = this.HealthBarForNetId[playerNetId];
         Destroy(healthBar.BarObject);
-        this.HealthBarForPlayerId.Remove(playerNetId);
+        this.HealthBarForNetId.Remove(playerNetId);
     }
 }
