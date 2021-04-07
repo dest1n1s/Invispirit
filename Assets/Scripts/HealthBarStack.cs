@@ -3,8 +3,8 @@
 // </copyright>
 
 using System.Collections.Generic;
-using Assets.Scripts.Network;
 using Mirror;
+using Network;
 using UnityEngine;
 
 /// <summary>
@@ -15,7 +15,7 @@ public class HealthBarStack : NetworkBehaviour
     [SerializeField]
     private GameObject healthBarPrefab;
     [SerializeField]
-    private PlayerManager playerManager;
+    private PlayerList playerList;
 
     /// <summary>
     /// Gets the dictionary from player ID's to their health bars.
@@ -27,7 +27,7 @@ public class HealthBarStack : NetworkBehaviour
     /// </summary>
     public override void OnStartClient()
     {
-        foreach (var playerNetId in this.playerManager.idDictionary.Keys)
+        foreach (var playerNetId in this.playerList.PlayerIdForNetId.Keys)
         {
             this.AddHealthBarForNetId(playerNetId);
         }
@@ -67,7 +67,7 @@ public class HealthBarStack : NetworkBehaviour
             return;
         }
 
-        foreach (var playerNetId in this.playerManager.idDictionary.Keys)
+        foreach (var playerNetId in this.playerList.PlayerIdForNetId.Keys)
         {
             this.AddHealthBarForNetId(playerNetId);
         }
@@ -94,19 +94,25 @@ public class HealthBarStack : NetworkBehaviour
     /// Adds the health bar of the player with the given net ID.
     /// </summary>
     /// <para>
-    /// If the net ID does not exist, nothing happens. This method will be called separately on the client and the
-    /// server.
+    /// If the net ID does not exist or the health bar is already added, nothing happens. This method will be called
+    /// separately on the client and the server.
     /// </para>
     /// <param name="playerNetId">the net ID of the player.</param>
     private void AddHealthBarForNetId(uint playerNetId)
     {
-        // Do nothing if the net ID cannot be found
-        if (this.HealthBarForPlayerId.ContainsKey(playerNetId))
+        // Do nothing if the net ID cannot be found. This is necessary because `playerList` might be not be synced yet.
+        if (!this.playerList.PlayerIdForNetId.ContainsKey(playerNetId))
         {
             return;
         }
 
-        var playerId = this.playerManager.idDictionary[playerNetId];
+        // Do nothing if the health bar is already added
+        if (this.HealthBarForNetId.ContainsKey(playerNetId))
+        {
+            return;
+        }
+
+        var playerId = this.playerList.PlayerIdForNetId[playerNetId];
         var healthBarPosition = new Vector3(0, (-4 * playerId) + 4);
         var healthBar = new HealthBar(this.healthBarPrefab, $"Player{playerId}", this.transform, healthBarPosition);
         this.HealthBarForNetId.Add(playerNetId, healthBar);

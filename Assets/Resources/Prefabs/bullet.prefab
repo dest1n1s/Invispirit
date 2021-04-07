@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: -6720763202652599409}
   - component: {fileID: -7690883234420487143}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -149,8 +149,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  Damage: 0
-  DestroyDistance: 100
 --- !u!114 &6231393325860732747
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,11 +191,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4939742036376690446}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4aa671ca83d9b44b90dc17b439a593c, type: 3}
+  m_Script: {fileID: 11500000, guid: f34c78649360347cd91053c0991f612a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  SyncTime: 0.1
+  syncDuration: 0.1

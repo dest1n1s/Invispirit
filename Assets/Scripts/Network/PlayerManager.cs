@@ -1,82 +1,85 @@
-﻿using Mirror;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+// <copyright file="PlayerManager.cs" company="ECYSL">
+// Copyright (c) ECYSL. All rights reserved.
+// </copyright>
 
-namespace Assets.Scripts.Network
+namespace Network
 {
-    public class PlayerManager : NetworkBehaviour
+    using System.Linq;
+    using Mirror;
+    using UnityEngine;
+
+    /// <summary>
+    /// Manages the connection and disconnection of clients and updates the list of players and the health bar stack
+    /// according to it.
+    /// </summary>
+    public class PlayerManager : NetworkManager
     {
-        public Dictionary<uint, uint> idDictionary = new Dictionary<uint, uint>();
-        public static readonly uint MAXID = 100;
-        public static Vector2 GetSpawnPosition()
-        {
-            Random.InitState((int)System.DateTime.Now.Ticks);
-            return new Vector2(Random.Range(-8.0f, 8.0f), Random.Range(-8.0f, 8.0f));
-        }
+        private const uint MaxNumberOfPlayers = 100;
 
-        [TargetRpc]
-        public void TargetSendIdDictionary(NetworkConnection conn,uint[] netid,uint[] id)
+        [SerializeField]
+        private PlayerList playerList;
+
+        [SerializeField]
+        private HealthBarStack healthBarStack;
+
+        private SyncDictionary<uint, uint> PlayerIdForNetId => this.playerList.PlayerIdForNetId;
+
+        /// <summary>
+        /// Called on the server when a client adds a new player with ClientScene.AddPlayer.
+        /// <para>The default implementation for this function creates a new player object from the playerPrefab.</para>
+        /// </summary>
+        /// <param name="conn">Connection from client.</param>
+        public override void OnServerAddPlayer(NetworkConnection conn)
         {
-            for(int i = 0; i < netid.Length; i++)
+            // The player will spawn at on a random position.
+            var randomSpawnPosition = new Vector3(Random.Range(-8.0f, 8.0f), Random.Range(-8.0f, 8.0f));
+
+            // Instantiate the player object
+            var player = Instantiate(this.playerPrefab, randomSpawnPosition, default);
+
+            // Set a unique name for the object for debugging
+            player.name = $"Player [connId={conn.connectionId}]";
+
+            // Add the player to the network server
+            NetworkServer.AddPlayerForConnection(conn, player);
+
+            // Set the player's player ID as the least possible unique int from 1 to MaxNumberOfPlayers.
+            uint playerId;
+            for (playerId = 1; playerId <= MaxNumberOfPlayers; playerId++)
             {
-                if (idDictionary.ContainsKey(netid[i])) continue;
-                idDictionary.Add(netid[i], id[i]);
+                if (!this.PlayerIdForNetId.Values.Contains(playerId))
+                {
+                    break;
+                }
             }
+
+            this.PlayerIdForNetId.Add(player.GetComponent<NetworkIdentity>().netId, playerId);
+
+            // Add the health bar of the player
+            // this.healthBarStack = GameObject.Find("Canvas").GetComponent<HealthBarStack>();
+            this.healthBarStack.AddHealthBarForPlayer(player);
         }
 
-        [Server]
-        public uint AddPlayer(GameObject gameObject)
+        /// <summary>
+        /// Removes the player from the player list and removes the player's health bar when a client disconnects.
+        /// </summary>
+        /// <param name="conn">Connection from client.</param>
+        public override void OnServerDisconnect(NetworkConnection conn)
         {
-            uint id;
-            for (id = 1; id <= MAXID; id++) if (!idDictionary.ContainsValue(id)) break;
-            idDictionary.Add(gameObject.GetComponent<NetworkIdentity>().netId, id);
-            RpcAddPlayer(id, gameObject.GetComponent<NetworkIdentity>().netId);
-            return id;
-        }
+            var playerObject = conn.identity.gameObject;
+            var netId = playerObject.GetComponent<NetworkIdentity>().netId;
 
-        [Server]
-        public void RemovePlayer(GameObject gameObject)
-        {
-            if (!idDictionary.ContainsKey(gameObject.GetComponent<NetworkIdentity>().netId)) return;
-            else
+            // Removes the player from the player list
+            if (this.PlayerIdForNetId.ContainsKey(netId))
             {
-                idDictionary.Remove(gameObject.GetComponent<NetworkIdentity>().netId);
-                RpcRemovePlayer(gameObject.GetComponent<NetworkIdentity>().netId);
+                this.PlayerIdForNetId.Remove(netId);
             }
-        }
 
-        [ClientRpc]
-        public void RpcAddPlayer(uint id, uint netid)
-        {
+            // Removes the health bar of the player
+            this.healthBarStack.RemoveBarForPlayer(playerObject);
 
-            if (idDictionary.ContainsKey(netid)) return;
-            idDictionary.Add(netid, id);
-        }
-
-        [ClientRpc]
-        public void RpcRemovePlayer(uint netid) 
-        {
-            if (!idDictionary.ContainsKey(netid)) return;
-            idDictionary.Remove(netid);
-        }
-        
-        public uint[] GetKeyArray()
-        {
-            uint[] arr = new uint[idDictionary.Count];
-            int i = 0;
-            foreach (uint netid in idDictionary.Keys) arr[i++] = netid;
-            return arr;
-        }
-
-        public uint[] GetValueArray()
-        {
-            uint[] arr = new uint[idDictionary.Count];
-            int i = 0;
-            foreach (uint id in idDictionary.Values) arr[i++] = id;
-            return arr;
+            // Calling the base implementation is necessary
+            base.OnServerDisconnect(conn);
         }
     }
 }

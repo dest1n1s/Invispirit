@@ -303,7 +303,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   healthBarPrefab: {fileID: 7765773416440346742, guid: 80fd302024a534e49999d12411f6483e, type: 3}
-  playerManager: {fileID: 1135324579}
+  playerList: {fileID: 1135324579}
 --- !u!114 &369975693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -464,7 +464,7 @@ GameObject:
   - component: {fileID: 1135324580}
   - component: {fileID: 1135324579}
   m_Layer: 0
-  m_Name: PlayerManager
+  m_Name: PlayerList
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -528,7 +528,7 @@ GameObject:
   - component: {fileID: 1738958770}
   - component: {fileID: 1738958772}
   m_Layer: 0
-  m_Name: NetworkManager
+  m_Name: PlayerManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -581,8 +581,8 @@ MonoBehaviour:
   spawnPrefabs:
   - {fileID: 4912383391690844649, guid: 347d3ef10c0f9774f82984471a356c56, type: 3}
   - {fileID: 4939742036376690446, guid: 75dfa50139d327849980a54faec9b85a, type: 3}
-  playerManager: {fileID: 1135324579}
-  barManager: {fileID: 369975692}
+  playerList: {fileID: 1135324579}
+  healthBarStack: {fileID: 369975692}
 --- !u!114 &1738958771
 MonoBehaviour:
   m_ObjectHideFlags: 0
