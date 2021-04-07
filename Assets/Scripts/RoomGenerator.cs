@@ -68,38 +68,42 @@ public class RoomGenerator : MonoBehaviour
 
     private void GenerateFloor()
     {
-        for (int i = 1; i <= this.MapData.GetLength(0); i++)
+        for (int i = 0; i < this.MapData.GetLength(0); i++)
         {
-            for (int j = 1; j <= this.MapData.GetLength(1); j++)
+            for (int j = 0; j < this.MapData.GetLength(1); j++)
             {
                 if (this.MapData[i, j] != 0)
                 {
-                    return;
+                    continue;
                 }
 
                 GameObject curFloor = this.RandomInstantiate(this.Floor);
                 curFloor.transform.SetParent(this.transform);
                 curFloor.transform.localScale = new Vector3(curFloor.transform.localScale.x * this.scale.x, curFloor.transform.localScale.y * this.scale.y, curFloor.transform.localScale.z);
-                curFloor.transform.position = new Vector3(this.StartPosition.x + ((j - 1) * curFloor.GetComponent<SpriteRenderer>().sprite.bounds.size.x), this.StartPosition.y + ((i - 1) * curFloor.GetComponent<SpriteRenderer>().sprite.bounds.size.y));
+                float width = curFloor.GetComponent<SpriteRenderer>().sprite.bounds.size.x * curFloor.transform.localScale.x;
+                float height = curFloor.GetComponent<SpriteRenderer>().sprite.bounds.size.y * curFloor.transform.localScale.y;
+                curFloor.transform.position = new Vector3(this.StartPosition.x + ((j - 1) * width), this.StartPosition.y - ((i - 1) * height));
             }
         }
     }
 
     private void GenerateWall()
     {
-        for (int i = 1; i <= this.MapData.GetLength(0); i++)
+        for (int i = 0; i < this.MapData.GetLength(0); i++)
         {
-            for (int j = 1; j <= this.MapData.GetLength(1); j++)
+            for (int j = 0; j < this.MapData.GetLength(1); j++)
             {
                 if (this.MapData[i, j] != 1)
                 {
-                    return;
+                    continue;
                 }
 
                 GameObject curWall = this.RandomInstantiate(this.Wall);
                 curWall.transform.SetParent(this.transform);
                 curWall.transform.localScale = new Vector3(curWall.transform.localScale.x * this.scale.x, curWall.transform.localScale.y * this.scale.y, curWall.transform.localScale.z);
-                curWall.transform.position = new Vector3(this.StartPosition.x + ((j - 1) * curWall.GetComponent<SpriteRenderer>().sprite.bounds.size.x), this.StartPosition.y + ((i - 1) * curWall.GetComponent<SpriteRenderer>().sprite.bounds.size.y));
+                float width = curWall.GetComponent<SpriteRenderer>().sprite.bounds.size.x * curWall.transform.localScale.x;
+                float height = curWall.GetComponent<SpriteRenderer>().sprite.bounds.size.y * curWall.transform.localScale.y;
+                curWall.transform.position = new Vector3(this.StartPosition.x + ((j - 1) * width), this.StartPosition.y - ((i - 1) * height));
             }
         }
     }

@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 161185081}
   - component: {fileID: 161185083}
   m_Layer: 0
-  m_Name: MapGenerator
+  m_Name: RoomGenerator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -153,9 +153,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f154e9713e424848a8bbc9974c71659, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Wall>k__BackingField: []
-  <Floor>k__BackingField: []
-  <StartPosition>k__BackingField: {x: 0, y: 0}
+  <Wall>k__BackingField:
+  - {fileID: 3256045895053094673, guid: 0b740c7eb405bdc4888fe25ad5c46058, type: 3}
+  - {fileID: 2227310340494155506, guid: 7c12cd6937eb3994daf66c8ea1325474, type: 3}
+  <Floor>k__BackingField:
+  - {fileID: 8188792804019685557, guid: 538f78e0b9fadfb4ca189c47531e9a9a, type: 3}
+  - {fileID: 6524731331697172119, guid: 39c120cad14cf134cb0beab0ff83e426, type: 3}
+  - {fileID: 9193402175238715064, guid: 6dca88ccd1c7c7246acb5aa85422b81a, type: 3}
+  <StartPosition>k__BackingField: {x: -9, y: 9}
 --- !u!4 &161185082
 Transform:
   m_ObjectHideFlags: 0
@@ -346,8 +351,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f87845c11ad94c4c8bd67b1275e939e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
 --- !u!114 &625187495
 MonoBehaviour:
   m_ObjectHideFlags: 0
