@@ -13,7 +13,7 @@ using UnityEngine;
 public class HealthBarStack : NetworkBehaviour
 {
     [SerializeField]
-    private GameObject healthBarStack;
+    private GameObject healthBarPrefab;
     [SerializeField]
     private PlayerManager playerManager;
 
@@ -108,7 +108,7 @@ public class HealthBarStack : NetworkBehaviour
 
         var playerId = this.playerManager.idDictionary[playerNetId];
         var healthBarPosition = new Vector3(0, (-4 * playerId) + 4);
-        var healthBar = new HealthBar(this.healthBarStack, $"Player{playerId}", this.transform, healthBarPosition);
+        var healthBar = new HealthBar(this.healthBarPrefab, $"Player{playerId}", this.transform, healthBarPosition);
         this.HealthBarForPlayerId.Add(playerNetId, healthBar);
     }
 
