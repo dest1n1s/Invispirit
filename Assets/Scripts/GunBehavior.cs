@@ -10,7 +10,6 @@ using UnityEngine;
 /// </summary>
 public class GunBehavior : NetworkBehaviour
 {
-    private Transform muzzleTransform;
     private Vector3 originalScale;
     private Vector2 gunDirection;
 
@@ -45,6 +44,12 @@ public class GunBehavior : NetworkBehaviour
     public GameObject Bullet { get; set; }
 
     /// <summary>
+    /// Gets or sets the muzzle.
+    /// </summary>
+    [field: SerializeField]
+    public GameObject Muzzle { get; set; }
+
+    /// <summary>
     /// Called when server starts.
     /// </summary>
     public override void OnStartServer()
@@ -69,7 +74,7 @@ public class GunBehavior : NetworkBehaviour
 
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0;
-        this.gunDirection = (mousePos - this.transform.position).normalized;
+        this.gunDirection = (mousePos - this.Muzzle.transform.position).normalized;
 
         if (this.gunDirection.sqrMagnitude == 0)
         {
@@ -103,13 +108,13 @@ public class GunBehavior : NetworkBehaviour
     [Command]
     private void CmdFire(Vector3 mousePos, GameObject gameObject)
     {
-        this.gunDirection = (mousePos - this.transform.position).normalized;
+        this.gunDirection = (mousePos - this.Muzzle.transform.position).normalized;
         if (this.gunDirection.sqrMagnitude == 0)
         {
             this.gunDirection = new Vector2(0, 1);
         }
 
-        GameObject newBullet = Instantiate(this.Bullet, this.muzzleTransform.position, Quaternion.Euler(this.transform.eulerAngles));
+        GameObject newBullet = Instantiate(this.Bullet, this.Muzzle.transform.position, Quaternion.Euler(this.transform.eulerAngles));
         newBullet.GetComponent<BulletBehavior>().Direction = this.gunDirection;
         newBullet.GetComponent<BulletBehavior>().Shooter = this.gameObject;
         NetworkServer.Spawn(newBullet, gameObject);

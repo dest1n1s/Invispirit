@@ -79,7 +79,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &4912383391690844649
@@ -239,11 +239,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  <Gun1>k__BackingField: {fileID: 0}
-  <Gun2>k__BackingField: {fileID: 0}
-  <Axis1>k__BackingField: {fileID: 0}
-  <Axis2>k__BackingField: {fileID: 0}
-  <Bullet>k__BackingField: {fileID: 0}
+  <Gun1>k__BackingField: {fileID: 7538934203419991617}
+  <Gun2>k__BackingField: {fileID: 5415385283161448306}
+  <Axis1>k__BackingField: {fileID: 6780781279485392241}
+  <Axis2>k__BackingField: {fileID: 4595688989550944711}
+  <Bullet>k__BackingField: {fileID: 4939742036376690446, guid: 75dfa50139d327849980a54faec9b85a, type: 3}
+  <Muzzle>k__BackingField: {fileID: 7538934204674515467}
 --- !u!114 &3670287231918764190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1145,7 +1146,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &7538934203419991617

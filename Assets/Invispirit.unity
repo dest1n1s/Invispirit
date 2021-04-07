@@ -153,18 +153,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f154e9713e424848a8bbc9974c71659, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Wall:
-  - {fileID: 2227310340494155506, guid: 7c12cd6937eb3994daf66c8ea1325474, type: 3}
-  - {fileID: 3256045895053094673, guid: 0b740c7eb405bdc4888fe25ad5c46058, type: 3}
-  Floor:
-  - {fileID: 8188792804019685557, guid: 538f78e0b9fadfb4ca189c47531e9a9a, type: 3}
-  - {fileID: 6524731331697172119, guid: 39c120cad14cf134cb0beab0ff83e426, type: 3}
-  - {fileID: 9193402175238715064, guid: 6dca88ccd1c7c7246acb5aa85422b81a, type: 3}
-  StartPosition: {x: -10, y: 10}
-  FloorSize: {x: 1, y: 1}
-  WallSize: {x: 1, y: 1}
-  WallHeight: 0.6
-  WallAmount: {x: 20, y: 20}
+  <Wall>k__BackingField: []
+  <Floor>k__BackingField: []
+  <StartPosition>k__BackingField: {x: 0, y: 0}
 --- !u!4 &161185082
 Transform:
   m_ObjectHideFlags: 0

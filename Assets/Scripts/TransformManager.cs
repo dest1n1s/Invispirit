@@ -1,29 +1,24 @@
-﻿using Assets.Scripts.Math;
+﻿// <copyright file="TransformManager.cs" company="ECYSL">
+//     Copyright (c) ECYSL. All rights reserved.
+// </copyright>
+
+using Assets.Scripts.Math;
 using UnityEngine;
 
-namespace Assets.Scripts
+/// <summary>
+/// The manager of the movement of rigidbody.
+/// </summary>
+public static class TransformManager
 {
-    //enum Direction
-    //{
-    //    Up,Down,Left,Right,UpLeft,DownLeft,UpRight,DownRight,Any
-    //}
     /// <summary>
-    /// 管理刚体移动类
+    /// Control the rigidbody to start move at a certain speed.
     /// </summary>
-    static class TransformManager
+    /// <param name="rigidbody">The rigidbody.</param>
+    /// <param name="direction">The direction to.</param>
+    /// <param name="speed">The speed the rigidbody move.</param>
+    public static void Move(this Rigidbody2D rigidbody, double direction, double speed)
     {
-        public static void Move(this Rigidbody2D rigidbody, double direction, double speed)
-        {
-            Vector2 e = new Vector2((float)speed, 0).Rotate(direction);
-            //rigidbody.AddForce(e * Time.deltaTime);
-            rigidbody.velocity = e;
-        }
-
-        //public static void Move(this Transform transform, double direction, double speed)
-        //{
-        //    Vector3 e = new Vector2((float)speed, 0).Rotate(direction);
-        //    //rigidbody.velocity = e.Rotate(direction);
-        //    transform.localPosition = transform.localPosition + e * Time.deltaTime * 10;
-        //}
+        Vector2 e = new Vector2((float)speed, 0).Rotate(direction);
+        rigidbody.velocity = e;
     }
 }
