@@ -1,5 +1,5 @@
-// <copyright file="HealthBar.cs" company="Invispirit">
-// Copyright (c) Invispirit. All rights reserved.
+// <copyright file="HealthBar.cs" company="ECYSL">
+// Copyright (c) ECYSL. All rights reserved.
 // </copyright>
 
 using UnityEngine;

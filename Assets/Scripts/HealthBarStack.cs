@@ -1,5 +1,5 @@
-// <copyright file="HealthBarStack.cs" company="Invispirit">
-// Copyright (c) Invispirit. All rights reserved.
+// <copyright file="HealthBarStack.cs" company="ECYSL">
+// Copyright (c) ECYSL. All rights reserved.
 // </copyright>
 
 using System.Collections.Generic;

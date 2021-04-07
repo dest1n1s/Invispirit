@@ -1,5 +1,5 @@
-// <copyright file="HealthManager.cs" company="Invispirit">
-// Copyright (c) Invispirit. All rights reserved.
+// <copyright file="HealthManager.cs" company="ECYSL">
+// Copyright (c) ECYSL. All rights reserved.
 // </copyright>
 
 using Mirror;
