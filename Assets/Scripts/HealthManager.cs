@@ -6,7 +6,7 @@ using Mirror;
 using UnityEngine;
 
 /// <summary>
-/// Manages the health of a player.
+/// Manages the health of a player and updates the player's health bar.
 /// </summary>
 public class HealthManager : NetworkBehaviour
 {

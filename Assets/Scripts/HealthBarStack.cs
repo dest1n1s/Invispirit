@@ -23,7 +23,7 @@ public class HealthBarStack : NetworkBehaviour
     public Dictionary<uint, HealthBar> HealthBarForNetId { get; } = new Dictionary<uint, HealthBar>();
 
     /// <summary>
-    ///  Add the health bars of all players on starting a client.
+    ///  Adds the health bars of all players on starting a client.
     /// </summary>
     public override void OnStartClient()
     {
@@ -50,7 +50,7 @@ public class HealthBarStack : NetworkBehaviour
     /// </summary>
     /// <param name="player">the player whose health bar is to be added.</param>
     [Server]
-    public void RemoveBarForPlayer(GameObject player)
+    public void RemoveHealthBarForPlayer(GameObject player)
     {
         var playerNetId = player.GetComponent<NetworkIdentity>().netId;
         this.RemoveHealthBarForNetId(playerNetId); // add on the server
