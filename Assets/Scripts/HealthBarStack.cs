@@ -27,7 +27,7 @@ public class HealthBarStack : NetworkBehaviour
     /// </summary>
     public override void OnStartClient()
     {
-        foreach (var playerNetId in this.playerList.PlayerIdForNetId.Keys)
+        foreach (var playerNetId in this.playerList.NetIds())
         {
             this.AddHealthBarForNetId(playerNetId);
         }
@@ -67,7 +67,8 @@ public class HealthBarStack : NetworkBehaviour
             return;
         }
 
-        foreach (var playerNetId in this.playerList.PlayerIdForNetId.Keys)
+        // Add the health bars for new players. Those who already exist will be skipped.
+        foreach (var playerNetId in this.playerList.NetIds())
         {
             this.AddHealthBarForNetId(playerNetId);
         }
@@ -100,8 +101,9 @@ public class HealthBarStack : NetworkBehaviour
     /// <param name="playerNetId">the net ID of the player.</param>
     private void AddHealthBarForNetId(uint playerNetId)
     {
-        // Do nothing if the net ID cannot be found. This is necessary because `playerList` might be not be synced yet.
-        if (!this.playerList.PlayerIdForNetId.ContainsKey(playerNetId))
+        // Do nothing if the net ID cannot be found.
+        // This additional check is necessary because `playerList`s on the server and client might not be synced yet.
+        if (!this.playerList.ContainsNetId(playerNetId))
         {
             return;
         }
@@ -112,7 +114,7 @@ public class HealthBarStack : NetworkBehaviour
             return;
         }
 
-        var playerId = this.playerList.PlayerIdForNetId[playerNetId];
+        var playerId = this.playerList.PlayerIdForNetId(playerNetId);
         var healthBarPosition = new Vector3(0, (-4 * playerId) + 4);
         var healthBar = new HealthBar(this.healthBarPrefab, $"Player{playerId}", this.transform, healthBarPosition);
         this.HealthBarForNetId.Add(playerNetId, healthBar);
