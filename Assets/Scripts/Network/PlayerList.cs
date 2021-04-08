@@ -36,6 +36,16 @@ namespace Network
         }
 
         /// <summary>
+        /// Returns whether there is a player with the provided player ID in the list.
+        /// </summary>
+        /// <param name="playerId">the player ID to be checked.</param>
+        /// <returns>whether there is a player with the provided player ID in the list.</returns>
+        public bool ContainsPlayerId(uint playerId)
+        {
+            return this.playerIdForNetId.Values.Contains(playerId);
+        }
+
+        /// <summary>
         /// Returns the player ID of the player with the provided net ID.
         /// </summary>
         /// <param name="playerNetId">the net ID to be searched.</param>
@@ -46,28 +56,13 @@ namespace Network
         }
 
         /// <summary>
-        /// Creates a new player object from a prefab, adds the player to the player list, and returns the player
-        /// object.
+        /// Adds a player to the player list.
         /// </summary>
-        /// <param name="playerPrefab">the prefab from which the player is to be created.</param>
-        /// <returns>the player object created from the method.</returns>
-        public GameObject CreateAndAddPlayer(GameObject playerPrefab)
+        /// <param name="player">the player to be added.</param>
+        /// <param name="playerId">the player ID of the player.</param>
+        public void AddPlayer(GameObject player, uint playerId)
         {
-            var randomSpawnPosition = new Vector3(Random.Range(-8.0f, 8.0f), Random.Range(-8.0f, 8.0f));
-            var player = Instantiate(playerPrefab, randomSpawnPosition, default);
-
-            // Set the player's player ID as the least possible unique int from 1
-            uint playerId = 1;
-            while (!this.playerIdForNetId.Values.Contains(playerId))
-            {
-                ++playerId;
-            }
-
-            // Set a unique object name for the player. This name is shown only in the debugger.
-            player.name = "Player " + playerId;
-
             this.playerIdForNetId.Add(player.GetComponent<NetworkIdentity>().netId, playerId);
-            return player;
         }
 
         /// <summary>

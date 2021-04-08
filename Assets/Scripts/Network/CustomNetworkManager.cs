@@ -29,12 +29,24 @@ namespace Network
         /// <param name="conn">Connection from client.</param>
         public override void OnServerAddPlayer(NetworkConnection conn)
         {
-            // Add the player to the player list
-            var player = this.playerList.CreateAndAddPlayer(this.playerPrefab);
+            // Generate randomly the spawn position
+            var randomSpawnPosition = new Vector3(Random.Range(-8.0f, 8.0f), Random.Range(-8.0f, 8.0f));
 
-            // Add the player to the network server
+            // Instantiate the player object.
+            var player = Instantiate(this.playerPrefab, randomSpawnPosition, default);
+
+            // Set the player's player ID as the least possible unique int from 1
+            uint playerId = 1;
+            while (this.playerList.ContainsPlayerId(playerId))
+            {
+                ++playerId;
+            }
+
+            // Set a unique object name for the player. This name is shown only in the debugger.
+            player.name = "Player " + playerId;
+
             NetworkServer.AddPlayerForConnection(conn, player);
-
+            this.playerList.AddPlayer(player, playerId);
             this.healthBarStack.AddHealthBarForPlayer(player);
         }
 
