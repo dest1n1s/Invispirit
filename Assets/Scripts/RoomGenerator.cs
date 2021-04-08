@@ -2,6 +2,8 @@
 //     Copyright (c) ECYSL. All rights reserved.
 // </copyright>
 
+using System.IO;
+using System.Text;
 using UnityEngine;
 
 /// <summary>
@@ -58,6 +60,67 @@ public class RoomGenerator : MonoBehaviour
         { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
         { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
     };
+
+    public static int[,] ReadMapData(string filename)
+    {
+        string configFile = Application.dataPath + "/" + filename;
+#if !UNITY_EDITOR
+        configFile = System.Environment.CurrentDirectory + "/" + filename;
+#endif
+        StreamReader reader = new StreamReader(configFile, Encoding.Default);
+        string line;
+        int rowCount = -1, colCount = -1;
+        while ((line = reader.ReadLine()) != null)
+        {
+            if (line.Contains(":"))
+            {
+                string[] kv = line.Split(':');
+                if (kv[0].Trim().Equals("rowCount"))
+                {
+                    rowCount = int.Parse(kv[1].Trim());
+                }
+                else if (kv[0].Trim().Equals("colCount"))
+                {
+                    colCount = int.Parse(kv[1].Trim());
+                }
+                else if (kv[0].Trim().Equals("room"))
+                {
+                    break;
+                }
+            }
+        }
+
+        if (rowCount == -1)
+        {
+            throw new System.Exception("Row count not found!");
+        }
+
+        if (colCount == -1)
+        {
+            throw new System.Exception("Column count not found!");
+        }
+
+        int[,] room = new int[rowCount, colCount];
+        int i = 0, j = 0;
+
+        while ((line = reader.ReadLine()) != null && i < rowCount)
+        {
+            if (!line.Contains("|"))
+            {
+                throw new System.Exception("Room map error!");
+            }
+
+            string[] row = line.Split('|');
+            for (; j < row.Length && j < colCount; j++)
+            {
+                room[i, j] = int.Parse(row[j].Trim());
+            }
+
+            i++;
+        }
+
+        return room;
+    }
 
     private void Start()
     {
