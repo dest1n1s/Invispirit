@@ -17,25 +17,13 @@ public class GunBehavior : NetworkBehaviour
     /// Gets or sets the first gun of the player.
     /// </summary>
     [field:SerializeField]
-    public GameObject Gun1 { get; set; }
-
-    /// <summary>
-    /// Gets or sets the second gun of the player.
-    /// </summary>
-    [field: SerializeField]
-    public GameObject Gun2 { get; set; }
+    public GameObject Gun { get; set; }
 
     /// <summary>
     /// Gets or sets the rotation axis of gun1.
     /// </summary>
     [field: SerializeField]
-    public GameObject Axis1 { get; set; }
-
-    /// <summary>
-    /// Gets or sets the rotation axis of gun2.
-    /// </summary>
-    [field: SerializeField]
-    public GameObject Axis2 { get; set; }
+    public GameObject Axis { get; set; }
 
     /// <summary>
     /// Gets or sets the bullet prefab.
@@ -86,14 +74,12 @@ public class GunBehavior : NetworkBehaviour
         if (mousePos.x - this.transform.position.x > 0)
         {
             this.transform.localScale = new Vector3(-this.originalScale.x, this.originalScale.y, this.originalScale.z);
-            this.Gun1.transform.RotateAround(this.Axis1.transform.position, new Vector3(0, 0, 1), angle - this.Gun1.transform.rotation.eulerAngles.z);
-            this.Gun2.transform.RotateAround(this.Axis2.transform.position, new Vector3(0, 0, 1), angle - this.Gun2.transform.rotation.eulerAngles.z);
+            this.Gun.transform.RotateAround(this.Axis.transform.position, new Vector3(0, 0, 1), angle - this.Gun.transform.rotation.eulerAngles.z);
         }
         else
         {
             this.transform.localScale = new Vector3(this.originalScale.x, this.originalScale.y, this.originalScale.z);
-            this.Gun1.transform.RotateAround(this.Axis1.transform.position, new Vector3(0, 0, 1), (Mathf.PI * Mathf.Rad2Deg) + angle - this.Gun1.transform.rotation.eulerAngles.z);
-            this.Gun2.transform.RotateAround(this.Axis2.transform.position, new Vector3(0, 0, 1), (Mathf.PI * Mathf.Rad2Deg) + angle - this.Gun2.transform.rotation.eulerAngles.z);
+            this.Gun.transform.RotateAround(this.Axis.transform.position, new Vector3(0, 0, 1), (Mathf.PI * Mathf.Rad2Deg) + angle - this.Gun.transform.rotation.eulerAngles.z);
         }
 
         this.CmdUpdateTransform(this.transform.position, this.transform.rotation, this.transform.localScale);
