@@ -10,7 +10,7 @@ using UnityEngine;
 /// </summary>
 public class HealthManager : NetworkBehaviour
 {
-    private HealthBarStack healthBarStackStack;
+    private HealthBarStack healthBarStack;
 
     /// <summary>
     /// Gets or sets the HP of the player.
@@ -40,11 +40,11 @@ public class HealthManager : NetworkBehaviour
     /// </summary>
     private void Update()
     {
-        this.healthBarStackStack.HealthBarForNetId[this.netId].Hp = this.Hp;
+        this.healthBarStack.HealthBarForNetId[this.netId].Hp = this.Hp;
     }
 
     private void FindBarManager()
     {
-        this.healthBarStackStack = GameObject.Find("Canvas").GetComponent<HealthBarStack>();
+        this.healthBarStack = GameObject.Find("Canvas").GetComponent<HealthBarStack>();
     }
 }
