@@ -8,7 +8,7 @@ using UnityEngine;
 /// </summary>
 public class HeroMoveBehavior : NetworkBehaviour
 {
-    private Animator animator;
+    private new Animator animator;
 
     /// <summary>
     /// Gets or sets the run animation of hero.
@@ -37,6 +37,7 @@ public class HeroMoveBehavior : NetworkBehaviour
     {
         this.rigidbody = this.GetComponent<Rigidbody2D>();
         this.rigidbody.freezeRotation = true;
+        this.animator = this.GetComponent<Animator>();
     }
 
     /// <summary>
@@ -58,6 +59,15 @@ public class HeroMoveBehavior : NetworkBehaviour
 
     private void Update()
     {
+        if (this.GetComponent<Rigidbody2D>().velocity.sqrMagnitude > 0)
+        {
+            this.animator.SetBool("run", true);
+        }
+        else if (this.GetComponent<Rigidbody2D>().velocity.sqrMagnitude == 0)
+        {
+            this.animator.SetBool("run", false);
+        }
+
         if (!this.isLocalPlayer)
         {
             return;
@@ -91,15 +101,6 @@ public class HeroMoveBehavior : NetworkBehaviour
         else
         {
             this.CmdMove(e.GetRad(), this.Speed);
-        }
-
-        if (this.GetComponent<Rigidbody2D>().velocity.sqrMagnitude > 0)
-        {
-            this.animator.SetBool("run", true);
-        }
-        else if (this.GetComponent<Rigidbody2D>().velocity.sqrMagnitude == 0)
-        {
-            this.animator.SetBool("run", false);
         }
     }
 
