@@ -239,11 +239,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  <Gun1>k__BackingField: {fileID: 7538934203419991617}
-  <Gun2>k__BackingField: {fileID: 5415385283161448306}
-  <Axis1>k__BackingField: {fileID: 6780781279485392241}
-  <Axis2>k__BackingField: {fileID: 4595688989550944711}
-  <Bullet>k__BackingField: {fileID: 4939742036376690446, guid: 75dfa50139d327849980a54faec9b85a, type: 3}
+  <Gun>k__BackingField: {fileID: 7538934203419991617}
+  <Axis>k__BackingField: {fileID: 6780781279485392241}
+  <Bullet>k__BackingField: {fileID: 4939742036376690446, guid: 75dfa50139d327849980a54faec9b85a,
+    type: 3}
   <Muzzle>k__BackingField: {fileID: 7538934204674515467}
 --- !u!114 &3670287231918764190
 MonoBehaviour:
@@ -977,8 +976,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a9831f3a2894324b91c46caadb85126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   syncMode: 0
   syncInterval: 0.1
   <MaxTime>k__BackingField: 3
@@ -1138,7 +1137,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: 4adeaf2d2b1c7417e89f026626d8264f, type: 3}
+  m_Sprite: {fileID: -2413806693520163455, guid: 4adeaf2d2b1c7417e89f026626d8264f,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
