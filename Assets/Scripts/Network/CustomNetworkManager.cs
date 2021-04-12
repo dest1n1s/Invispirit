@@ -19,9 +19,18 @@ namespace Network
     {
         [SerializeField]
         private PlayerList playerList;
-
         [SerializeField]
         private HealthBarStack healthBarStack;
+
+        private void Update()
+        {
+            if (NetworkClient.isConnected)
+            {
+                this.playerList = GameObject.Find("PlayerList").GetComponent<PlayerList>();
+                this.healthBarStack = GameObject.Find("Canvas").GetComponent<HealthBarStack>();
+                return;
+            }
+        }
 
         /// <summary>
         /// Adds a new connected player to tbe player list and adds the player's health bar.
