@@ -1,4 +1,4 @@
-// <copyright file="TransformSyncManager.cs" company="ECYSL">
+// <copyright file="PlayerTransformSyncManager.cs" company="ECYSL">
 // Copyright (c) ECYSL. All rights reserved.
 // </copyright>
 
@@ -8,9 +8,9 @@ namespace Network
     using UnityEngine;
 
     /// <summary>
-    /// Manages the synchronization of the transforms of a game object, for example a player or a bullet.
+    /// Manages the synchronization of the transforms of a player.
     /// </summary>
-    public class TransformSyncManager : NetworkBehaviour
+    public class PlayerTransformSyncManager : NetworkBehaviour
     {
         /// <summary>
         /// The time (0.1s) it takes for the object to travel from its original position (the value on the client)
